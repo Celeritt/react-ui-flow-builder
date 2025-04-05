@@ -104,7 +104,7 @@ const HomePage = () => {
       <div className="mb-8">
         <Tabs defaultValue="recent" className="w-full">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-2xl font-bold text-gray-800 dark:text-white">Projects</h2>
+            <h2 className="text-2xl font-bold text-gray-800 dark:text-white">Pick up where you left</h2>
             <TabsList>
               <TabsTrigger value="recent">Recent Works</TabsTrigger>
               <TabsTrigger value="favorites">Favorites</TabsTrigger>
