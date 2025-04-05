@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { ChevronDown, ChevronRight, Database, FileText, Home, Search, Settings } from 'lucide-react';
+import { ChevronDown, ChevronRight, Database, FileText, Home, Search, Settings, User, Layers, Server, Book, Clipboard, Bell, Key } from 'lucide-react';
 import { cn } from "@/lib/utils";
 
 interface SidebarProps {
@@ -20,6 +20,8 @@ interface MenuItemProps {
   onClick: () => void;
   onChildClick?: (childId: string) => void;
   level?: number;
+  isAdmin?: boolean;
+  currentUserIsAdmin?: boolean;
 }
 
 interface MenuItem {
@@ -27,6 +29,7 @@ interface MenuItem {
   label: string;
   icon?: React.ReactNode;
   children?: MenuItem[];
+  isAdmin?: boolean;
 }
 
 const MenuItem: React.FC<MenuItemProps> = ({ 
@@ -38,14 +41,19 @@ const MenuItem: React.FC<MenuItemProps> = ({
   isExpanded = false, 
   onClick, 
   onChildClick,
-  level = 0 
+  level = 0,
+  isAdmin = false,
+  currentUserIsAdmin = false
 }) => {
+  // Don't render admin items if user is not an admin
+  if (isAdmin && !currentUserIsAdmin) return null;
+  
   return (
     <div className="w-full">
       <div 
         className={cn(
           "flex items-center px-3 py-2 rounded-md cursor-pointer text-sm", 
-          isActive ? "bg-blue-100 text-blue-700" : "hover:bg-gray-100",
+          isActive ? "bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300" : "hover:bg-gray-100 dark:hover:bg-gray-800",
           level > 0 && "ml-4"
         )}
         onClick={onClick}
@@ -60,13 +68,13 @@ const MenuItem: React.FC<MenuItemProps> = ({
       </div>
       
       {isExpanded && children && children.length > 0 && (
-        <div className="ml-2 mt-1 border-l-2 border-gray-200">
+        <div className="ml-2 mt-1 border-l-2 border-gray-200 dark:border-gray-700">
           {children.map((child) => (
             <div 
               key={child.id}
               className={cn(
                 "flex items-center px-3 py-2 ml-4 rounded-md cursor-pointer text-sm",
-                id === child.id ? "bg-blue-100 text-blue-700" : "hover:bg-gray-100"
+                activePage === child.id ? "bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300" : "hover:bg-gray-100 dark:hover:bg-gray-800"
               )}
               onClick={() => onChildClick && onChildClick(child.id)}
             >
@@ -87,6 +95,8 @@ const Sidebar: React.FC<SidebarProps> = ({
   setActivePage 
 }) => {
   const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({});
+  // For demonstration, you would connect this to your auth system
+  const currentUserIsAdmin = true;
 
   const menuItems: MenuItem[] = [
     {
@@ -138,19 +148,19 @@ const Sidebar: React.FC<SidebarProps> = ({
       ]
     },
     {
-      id: 'data-dashboard',
-      label: 'Data Dashboard',
-      icon: <Database size={18} />,
-      children: [
-        { id: 'data-dashboard-schema', label: 'Schema' }
-      ]
-    },
-    {
-      id: 'collaboration',
-      label: 'Collaboration',
+      id: 'admin',
+      label: 'Admin',
       icon: <Settings size={18} />,
+      isAdmin: true,
       children: [
-        { id: 'collaboration-folders', label: 'Folders' }
+        { id: 'admin-users-roles', label: 'Users & Roles', icon: <User size={16} /> },
+        { id: 'admin-lakehouse', label: 'Lakehouse Environment', icon: <Layers size={16} /> },
+        { id: 'admin-sql-engine', label: 'SQL Engine', icon: <Server size={16} /> },
+        { id: 'admin-catalog', label: 'Catalog', icon: <Book size={16} /> },
+        { id: 'admin-task-manager', label: 'Task Manager', icon: <Clipboard size={16} /> },
+        { id: 'admin-task-status', label: 'Task Status', icon: <Clipboard size={16} /> },
+        { id: 'admin-announcement', label: 'Announcement', icon: <Bell size={16} /> },
+        { id: 'admin-api-token', label: 'API Access Token Manager', icon: <Key size={16} /> },
       ]
     }
   ];
@@ -173,9 +183,9 @@ const Sidebar: React.FC<SidebarProps> = ({
   };
 
   return (
-    <div className="w-64 h-full flex flex-col border-r border-gray-200 bg-white overflow-y-auto">
-      <div className="p-4 border-b border-gray-200">
-        <h1 className="text-xl font-bold text-gray-800">Data Platform</h1>
+    <div className="w-64 h-full flex flex-col border-r border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 overflow-y-auto">
+      <div className="p-4 border-b border-gray-200 dark:border-gray-700">
+        <h1 className="text-xl font-bold text-gray-800 dark:text-gray-200">Data Platform</h1>
       </div>
       
       <div className="flex-1 overflow-y-auto p-2">
@@ -190,12 +200,14 @@ const Sidebar: React.FC<SidebarProps> = ({
             isExpanded={expandedSections[item.id]}
             onClick={() => handleSectionClick(item.id)}
             onChildClick={(childId) => handlePageClick(item.id, childId)}
+            isAdmin={item.isAdmin}
+            currentUserIsAdmin={currentUserIsAdmin}
           />
         ))}
       </div>
 
-      <div className="p-4 border-t border-gray-200">
-        <div className="flex items-center text-sm text-gray-500">
+      <div className="p-4 border-t border-gray-200 dark:border-gray-700">
+        <div className="flex items-center text-sm text-gray-500 dark:text-gray-400">
           <Settings size={16} className="mr-2" />
           <span>Settings</span>
         </div>

@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Sidebar from '../components/Sidebar';
 import ContentArea from '../components/ContentArea';
 import BackendIntegrationGuide from '../components/BackendIntegrationGuide';
+import HomePage from '../components/HomePage';
 
 const Index = () => {
   const [activeSection, setActiveSection] = useState<string | null>(null);
@@ -10,7 +11,7 @@ const Index = () => {
   const [showIntegrationGuide, setShowIntegrationGuide] = useState(false);
   
   return (
-    <div className="flex h-screen w-full overflow-hidden bg-gray-50">
+    <div className="flex h-screen w-full overflow-hidden bg-gray-50 dark:bg-gray-900">
       <Sidebar 
         activeSection={activeSection} 
         setActiveSection={setActiveSection} 
@@ -18,24 +19,9 @@ const Index = () => {
         setActivePage={setActivePage}
       />
       <div className="flex-1 overflow-auto">
-        <div className="p-6">
+        <div className="p-0">
           {!activeSection && !activePage && (
-            <>
-              <div className="text-center mb-8">
-                <h1 className="text-2xl font-bold text-gray-800">Welcome to Your Data Platform</h1>
-                <p className="text-gray-600 mt-2">
-                  Select a menu item from the sidebar to navigate through the platform
-                </p>
-                <button 
-                  className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
-                  onClick={() => setShowIntegrationGuide(!showIntegrationGuide)}
-                >
-                  {showIntegrationGuide ? 'Hide' : 'Show'} Backend Integration Guide
-                </button>
-              </div>
-              
-              {showIntegrationGuide && <BackendIntegrationGuide />}
-            </>
+            <HomePage />
           )}
           
           {(activeSection || activePage) && (
