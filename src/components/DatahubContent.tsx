@@ -241,7 +241,7 @@ const DatahubContent: React.FC<DatahubContentProps> = ({ activePage }) => {
                       </td>
                     </tr>
                     <tr>
-                      <td className="px-4 py-2">SELECT * FROM sales WHERE date > '2025-03-01'</td>
+                      <td className="px-4 py-2">SELECT * FROM sales WHERE date &gt; '2025-03-01'</td>
                       <td className="px-4 py-2">2025-04-04</td>
                       <td className="px-4 py-2">2,154</td>
                       <td className="px-4 py-2">

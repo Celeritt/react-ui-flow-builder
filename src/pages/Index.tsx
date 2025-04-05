@@ -5,7 +5,7 @@ import ContentArea from '../components/ContentArea';
 import HomePage from '../components/HomePage';
 
 const Index = () => {
-  const [activeSection, setActiveSection] = useState<string | null>(null);
+  const [activeSection, setActiveSection] = useState<string | null>('home');
   const [activePage, setActivePage] = useState<string | null>(null);
   
   return (
