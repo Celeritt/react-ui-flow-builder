@@ -1,5 +1,6 @@
 
 import { cn } from "@/lib/utils";
+import DatahubContent from "./DatahubContent";
 
 interface ContentAreaProps {
   activeSection: string | null;
@@ -34,36 +35,8 @@ const contentMapping: ContentMapping = {
       description: 'Create and manage your workflows'
     }
   },
-  datahub: {
-    'datahub-connectors': {
-      title: 'Connectors',
-      description: 'Connect to external data sources'
-    },
-    'datahub-upload': {
-      title: 'Upload',
-      description: 'Upload your data files'
-    },
-    'datahub-datapool': {
-      title: 'Data Pool',
-      description: 'Manage your data pool'
-    },
-    'datahub-external': {
-      title: 'External',
-      description: 'Access external data sources'
-    }
-  },
-  'bi-canvas': {
-    'bi-canvas-vizualizer': {
-      title: 'Add Vizualizer',
-      description: 'Create new data visualizations'
-    },
-    'bi-canvas-dashboards': {
-      title: 'Dashboards',
-      description: 'View and manage BI dashboards'
-    }
-  },
-  projects: {
-    'projects-scheduler': {
+  works: {
+    'works-scheduler': {
       title: 'Scheduler',
       description: 'Schedule project tasks'
     }
@@ -78,31 +51,65 @@ const contentMapping: ContentMapping = {
       description: 'Manage your query workbooks'
     }
   },
-  'data-dashboard': {
-    'data-dashboard-schema': {
-      title: 'Schema',
-      description: 'Explore your data schema'
+  'bi-canvas': {
+    'bi-canvas-vizualizer': {
+      title: 'Add Vizualizer',
+      description: 'Create new data visualizations'
+    },
+    'bi-canvas-dashboards': {
+      title: 'Dashboards',
+      description: 'View and manage BI dashboards'
     }
   },
-  'collaboration': {
-    'collaboration-folders': {
-      title: 'Folders',
-      description: 'Manage shared folders'
+  admin: {
+    'admin-users-roles': {
+      title: 'Users & Roles',
+      description: 'Manage users and their roles'
+    },
+    'admin-lakehouse': {
+      title: 'Lakehouse Environment',
+      description: 'Configure lakehouse environment settings'
+    },
+    'admin-sql-engine': {
+      title: 'SQL Engine',
+      description: 'Configure SQL engine settings'
+    },
+    'admin-catalog': {
+      title: 'Catalog',
+      description: 'Manage data catalog'
+    },
+    'admin-task-manager': {
+      title: 'Task Manager',
+      description: 'Manage data processing tasks'
+    },
+    'admin-task-status': {
+      title: 'Task Status',
+      description: 'View status of running tasks'
+    },
+    'admin-announcement': {
+      title: 'Announcement',
+      description: 'Manage platform announcements'
+    },
+    'admin-api-token': {
+      title: 'API Access Token Manager',
+      description: 'Manage API access tokens'
     }
   }
 };
 
 const ContentArea: React.FC<ContentAreaProps> = ({ activeSection, activePage }) => {
   const getContent = () => {
+    // If user is on the home section or no section is selected, show the HomePage
     if (!activeSection) {
-      return (
-        <div className="text-center">
-          <h2 className="text-xl font-semibold text-gray-700">Welcome to the Data Platform</h2>
-          <p className="text-gray-500 mt-2">Select a menu item to get started</p>
-        </div>
-      );
+      return null;
     }
 
+    // Handle special case for Datahub section
+    if (activeSection === 'datahub') {
+      return <DatahubContent activePage={activePage} />;
+    }
+
+    // Handle other sections
     if (!activePage) {
       return (
         <div className="text-center">

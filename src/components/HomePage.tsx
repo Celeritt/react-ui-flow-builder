@@ -2,7 +2,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Upload, Database, LineChart, Users, Clock, ArrowRight, PlusCircle, Layout, FileText, BarChart2, FolderTree } from 'lucide-react';
+import { FileText, Layout, LineChart, ArrowRight, PlusCircle, BarChart2, FolderTree } from 'lucide-react';
 
 const HomePage = () => {
   const [activeTab, setActiveTab] = useState('recent');
@@ -188,7 +188,7 @@ const HomePage = () => {
                     <tr key={work.id} className="hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer">
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center">
-                          <Clock size={16} className="text-gray-400 mr-2" />
+                          <FileText size={16} className="text-gray-400 mr-2" />
                           <div className="text-sm font-medium text-gray-900 dark:text-gray-200">{work.title}</div>
                         </div>
                       </td>
@@ -232,7 +232,7 @@ const HomePage = () => {
                     <tr key={work.id} className="hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer">
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center">
-                          <Clock size={16} className="text-gray-400 mr-2" />
+                          <FileText size={16} className="text-gray-400 mr-2" />
                           <div className="text-sm font-medium text-gray-900 dark:text-gray-200">{work.title}</div>
                         </div>
                       </td>
