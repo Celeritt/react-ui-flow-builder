@@ -74,7 +74,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
               key={child.id}
               className={cn(
                 "flex items-center px-3 py-2 ml-4 rounded-md cursor-pointer text-sm",
-                onChildClick && activePage === child.id ? "bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300" : "hover:bg-gray-100 dark:hover:bg-gray-800"
+                onChildClick && child.id === onChildClick['activeChildId'] ? "bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300" : "hover:bg-gray-100 dark:hover:bg-gray-800"
               )}
               onClick={() => onChildClick && onChildClick(child.id)}
             >
@@ -202,7 +202,7 @@ const Sidebar: React.FC<SidebarProps> = ({
             onChildClick={(childId) => handlePageClick(item.id, childId)}
             isAdmin={item.isAdmin}
             currentUserIsAdmin={currentUserIsAdmin}
-            activePage={activePage}
+            onChildClick={{ activeChildId: activePage }}
           />
         ))}
       </div>

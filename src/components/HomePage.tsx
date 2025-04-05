@@ -1,11 +1,12 @@
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Upload, Database, LineChart, Users, Clock, ArrowRight } from 'lucide-react';
+import { Upload, Database, LineChart, Users, Clock, ArrowRight, PlusCircle, Layout, FileText, BarChart2, FolderTree } from 'lucide-react';
 
 const HomePage = () => {
   const [activeTab, setActiveTab] = useState('recent');
+  const messageRef = useRef<HTMLDivElement>(null);
   
   const recentWorks = [
     { id: 1, title: "2025-04-05 9:09am", type: "SQL Worksheet", viewed: "45 minutes ago", updated: "47 minutes ago" },
@@ -19,6 +20,23 @@ const HomePage = () => {
     { id: 2, title: "Customer Analysis", type: "SQL Worksheet", viewed: "3 days ago", updated: "5 days ago" },
     { id: 3, title: "Monthly Reports", type: "Workbook", viewed: "1 week ago", updated: "1 month ago" }
   ];
+
+  // Add scrolling effect for Quick Facts
+  useEffect(() => {
+    const scrollMessage = () => {
+      if (messageRef.current) {
+        const container = messageRef.current;
+        if (container.scrollLeft >= container.scrollWidth - container.clientWidth) {
+          container.scrollLeft = 0;
+        } else {
+          container.scrollLeft += 1;
+        }
+      }
+    };
+    
+    const scrollInterval = setInterval(scrollMessage, 50);
+    return () => clearInterval(scrollInterval);
+  }, []);
   
   return (
     <div className="container mx-auto p-6">
@@ -36,19 +54,35 @@ const HomePage = () => {
         </p>
       </div>
       
+      {/* Quick Facts Section */}
+      <div className="mb-8">
+        <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-2">Quick Facts</h2>
+        <div 
+          ref={messageRef} 
+          className="bg-green-50 dark:bg-green-900/20 border border-green-100 dark:border-green-800/30 rounded-lg p-3 overflow-hidden whitespace-nowrap"
+        >
+          <div className="inline-block min-w-full">
+            <p className="text-gray-700 dark:text-gray-300">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam voluptatibus, quibusdam, voluptates, quos voluptatum quod quas voluptas quae quia doloribus quidem.
+            </p>
+          </div>
+        </div>
+      </div>
+      
       {/* Quick Links Section */}
-      <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-6">Quick Actions</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+      <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-6">Quick Links</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 mb-12">
         <Card className="p-6 hover:shadow-md transition-shadow border-green-100 dark:border-green-900/30 hover:border-green-200 dark:hover:border-green-800/50">
           <div className="flex flex-col h-full">
             <div className="bg-green-100 dark:bg-green-800/30 p-3 rounded-full w-12 h-12 flex items-center justify-center mb-4">
-              <Upload className="text-green-600 dark:text-green-400" size={20} />
+              <FileText className="text-green-600 dark:text-green-400" size={20} />
+              <PlusCircle className="text-green-600 dark:text-green-400 absolute -right-1 -bottom-1" size={16} />
             </div>
-            <h3 className="text-lg font-semibold mb-2 text-gray-800 dark:text-white">Upload local files</h3>
-            <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">Quickly convert data into tables</p>
+            <h3 className="text-lg font-semibold mb-2 text-gray-800 dark:text-white">Workbooks</h3>
+            <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">Create a new workbook</p>
             <div className="mt-auto">
               <button className="text-green-600 dark:text-green-400 hover:text-green-700 dark:hover:text-green-300 font-medium text-sm inline-flex items-center">
-                Start Upload <ArrowRight size={16} className="ml-1" />
+                New <ArrowRight size={16} className="ml-1" />
               </button>
             </div>
           </div>
@@ -57,13 +91,14 @@ const HomePage = () => {
         <Card className="p-6 hover:shadow-md transition-shadow border-green-100 dark:border-green-900/30 hover:border-green-200 dark:hover:border-green-800/50">
           <div className="flex flex-col h-full">
             <div className="bg-green-100 dark:bg-green-800/30 p-3 rounded-full w-12 h-12 flex items-center justify-center mb-4">
-              <Database className="text-green-600 dark:text-green-400" size={20} />
+              <Layout className="text-green-600 dark:text-green-400" size={20} />
+              <PlusCircle className="text-green-600 dark:text-green-400 absolute -right-1 -bottom-1" size={16} />
             </div>
-            <h3 className="text-lg font-semibold mb-2 text-gray-800 dark:text-white">Load from cloud storage</h3>
-            <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">Use a SQL template to load data</p>
+            <h3 className="text-lg font-semibold mb-2 text-gray-800 dark:text-white">Spaces</h3>
+            <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">Create new collaborative space</p>
             <div className="mt-auto">
               <button className="text-green-600 dark:text-green-400 hover:text-green-700 dark:hover:text-green-300 font-medium text-sm inline-flex items-center">
-                Connect <ArrowRight size={16} className="ml-1" />
+                New <ArrowRight size={16} className="ml-1" />
               </button>
             </div>
           </div>
@@ -73,12 +108,13 @@ const HomePage = () => {
           <div className="flex flex-col h-full">
             <div className="bg-green-100 dark:bg-green-800/30 p-3 rounded-full w-12 h-12 flex items-center justify-center mb-4">
               <LineChart className="text-green-600 dark:text-green-400" size={20} />
+              <PlusCircle className="text-green-600 dark:text-green-400 absolute -right-1 -bottom-1" size={16} />
             </div>
-            <h3 className="text-lg font-semibold mb-2 text-gray-800 dark:text-white">Query data</h3>
-            <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">Create a SQL Worksheet</p>
+            <h3 className="text-lg font-semibold mb-2 text-gray-800 dark:text-white">Query Editor</h3>
+            <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">Create a new query</p>
             <div className="mt-auto">
               <button className="text-green-600 dark:text-green-400 hover:text-green-700 dark:hover:text-green-300 font-medium text-sm inline-flex items-center">
-                Create <ArrowRight size={16} className="ml-1" />
+                New <ArrowRight size={16} className="ml-1" />
               </button>
             </div>
           </div>
@@ -86,14 +122,31 @@ const HomePage = () => {
         
         <Card className="p-6 hover:shadow-md transition-shadow border-green-100 dark:border-green-900/30 hover:border-green-200 dark:hover:border-green-800/50">
           <div className="flex flex-col h-full">
-            <div className="bg-green-100 dark:bg-green-800/30 p-3 rounded-full w-12 h-12 flex items-center justify-center mb-4">
-              <Users className="text-green-600 dark:text-green-400" size={20} />
+            <div className="bg-green-100 dark:bg-green-800/30 p-3 rounded-full w-12 h-12 flex items-center justify-center mb-4 relative">
+              <BarChart2 className="text-green-600 dark:text-green-400" size={20} />
+              <PlusCircle className="text-green-600 dark:text-green-400 absolute -right-1 -bottom-1" size={16} />
             </div>
-            <h3 className="text-lg font-semibold mb-2 text-gray-800 dark:text-white">Invite users</h3>
-            <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">Collaborate with others on your team</p>
+            <h3 className="text-lg font-semibold mb-2 text-gray-800 dark:text-white">BI Dashboard</h3>
+            <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">Create a new dashboard</p>
             <div className="mt-auto">
               <button className="text-green-600 dark:text-green-400 hover:text-green-700 dark:hover:text-green-300 font-medium text-sm inline-flex items-center">
-                Invite <ArrowRight size={16} className="ml-1" />
+                New <ArrowRight size={16} className="ml-1" />
+              </button>
+            </div>
+          </div>
+        </Card>
+        
+        <Card className="p-6 hover:shadow-md transition-shadow border-green-100 dark:border-green-900/30 hover:border-green-200 dark:hover:border-green-800/50">
+          <div className="flex flex-col h-full">
+            <div className="bg-green-100 dark:bg-green-800/30 p-3 rounded-full w-12 h-12 flex items-center justify-center mb-4 relative">
+              <FolderTree className="text-green-600 dark:text-green-400" size={20} />
+              <PlusCircle className="text-green-600 dark:text-green-400 absolute -right-1 -bottom-1" size={16} />
+            </div>
+            <h3 className="text-lg font-semibold mb-2 text-gray-800 dark:text-white">Lakehouse Objects</h3>
+            <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">Create lakehouse objects</p>
+            <div className="mt-auto">
+              <button className="text-green-600 dark:text-green-400 hover:text-green-700 dark:hover:text-green-300 font-medium text-sm inline-flex items-center">
+                New <ArrowRight size={16} className="ml-1" />
               </button>
             </div>
           </div>
