@@ -1,7 +1,8 @@
+
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card } from "@/components/ui/card";
-import { ArrowRight, Plus, Hammer, Spanner } from "lucide-react";
+import { ArrowRight, Plus, Hammer, Wrench } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 interface WorksContentProps {
@@ -232,7 +233,7 @@ const WorksContent: React.FC<WorksContentProps> = ({ activePage }) => {
             </p>
             <div className="flex justify-center my-6">
               <div className="h-40 w-full max-w-xs bg-gradient-to-r from-purple-100 to-pink-100 dark:from-purple-900 dark:to-pink-900 rounded-lg flex items-center justify-center">
-                <Spanner size={64} className="text-purple-500 dark:text-purple-300" />
+                <Wrench size={64} className="text-purple-500 dark:text-purple-300" />
               </div>
             </div>
             <Button 

@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { ChevronDown, ChevronRight, Database, FileText, Home, Search, Settings, User, Layers, Server, Book, Clipboard, Bell, Key, Upload, CloudUpload, Menu, Plus, ArrowRight, PieChart, Hammer, Spanner } from 'lucide-react';
+import { ChevronDown, ChevronRight, Database, FileText, Home, Search, Settings, User, Layers, Server, Book, Clipboard, Bell, Key, Upload, CloudUpload, Menu, Plus, ArrowRight, PieChart, Hammer, Wrench } from 'lucide-react';
 import { cn } from "@/lib/utils";
 
 interface SidebarProps {
@@ -126,7 +126,7 @@ const Sidebar: React.FC<SidebarProps> = ({
     {
       id: 'works',
       label: 'Works',
-      icon: <Spanner size={18} />,
+      icon: <Wrench size={18} />,
       children: [
         { id: 'works-workbooks', label: 'Workbooks' },
         { id: 'works-scheduler', label: 'Scheduled Jobs' }
