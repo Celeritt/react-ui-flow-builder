@@ -105,7 +105,7 @@ const QueryContent: React.FC<QueryContentProps> = ({ activePage }) => {
                 <Card key={i} className="p-4 hover:shadow-md transition-shadow cursor-pointer">
                   <h3 className="font-medium mb-2">Customer Acquisition Report</h3>
                   <p className="text-sm text-gray-600 mb-4">
-                    SELECT count(*) as new_customers, signup_date FROM customers WHERE signup_date > '2025-01-01' GROUP BY signup_date
+                    SELECT count(*) as new_customers, signup_date FROM customers WHERE signup_date {'>'} '2025-01-01' GROUP BY signup_date
                   </p>
                   <div className="flex justify-between items-center text-xs text-gray-500">
                     <span>By Marketing Dept</span>
@@ -127,7 +127,7 @@ const QueryContent: React.FC<QueryContentProps> = ({ activePage }) => {
                 <Card key={i} className="p-4 hover:shadow-md transition-shadow cursor-pointer">
                   <h3 className="font-medium mb-2">Personal Performance Metrics</h3>
                   <p className="text-sm text-gray-600 mb-4">
-                    SELECT * FROM employee_stats WHERE employee_id = 'current_user_id' AND date > '2025-03-01'
+                    SELECT * FROM employee_stats WHERE employee_id = 'current_user_id' AND date {'>'} '2025-03-01'
                   </p>
                   <div className="flex justify-between items-center text-xs text-gray-500">
                     <span>Created by you</span>
@@ -180,7 +180,7 @@ const QueryContent: React.FC<QueryContentProps> = ({ activePage }) => {
                   <div className="flex justify-between items-start mb-2">
                     <div>
                       <p className="font-mono text-sm">
-                        SELECT * FROM customers WHERE signup_date > '2025-03-01' ORDER BY signup_date DESC LIMIT 100
+                        SELECT * FROM customers WHERE signup_date {'>'} '2025-03-01' ORDER BY signup_date DESC LIMIT 100
                       </p>
                     </div>
                     <div className="flex items-center gap-2">

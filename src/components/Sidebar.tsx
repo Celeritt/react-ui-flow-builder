@@ -168,6 +168,11 @@ const Sidebar: React.FC<SidebarProps> = ({
   ];
 
   const handleSectionClick = (sectionId: string) => {
+    if (collapsed) {
+      // Toggle sidebar open if it's currently collapsed
+      setCollapsed(false);
+    }
+    
     setExpandedSections(prev => ({ 
       ...prev, 
       [sectionId]: !prev[sectionId] 
