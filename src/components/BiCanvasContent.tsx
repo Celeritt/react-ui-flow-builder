@@ -20,18 +20,6 @@ const BiCanvasContent: React.FC<BiCanvasContentProps> = ({ activePage }) => {
     alert(`Navigating to ${url} (This will be replaced with actual navigation in production)`);
   };
 
-  // If vizualizer is selected, redirect to viz builder
-  if (activePage === 'bi-canvas-vizualizer') {
-    navigateTo('/viz-builder');
-    return null;
-  }
-
-  // If dashboards is selected, redirect to dashboards
-  if (activePage === 'bi-canvas-dashboards') {
-    navigateTo('/dashboards');
-    return null;
-  }
-
   return (
     <div className="container mx-auto">
       <div className="mb-10">
@@ -94,43 +82,27 @@ const BiCanvasContent: React.FC<BiCanvasContentProps> = ({ activePage }) => {
       </div>
       
       <div>
-        <h2 className="text-2xl font-bold mb-6">Sample Dashboard</h2>
-        <Card className="p-6 shadow-lg cursor-pointer hover:shadow-xl transition-all duration-300" onClick={() => navigateTo('/dashboards/sample')}>
-          <h3 className="text-lg font-medium mb-4">Sales Performance Dashboard</h3>
-          
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-            <div className="bg-green-100 dark:bg-green-900 p-3 rounded-md text-center">
-              <p className="text-sm text-gray-600 dark:text-gray-300">Revenue</p>
-              <p className="text-xl font-bold">$1.2M</p>
-            </div>
-            <div className="bg-blue-100 dark:bg-blue-900 p-3 rounded-md text-center">
-              <p className="text-sm text-gray-600 dark:text-gray-300">Orders</p>
-              <p className="text-xl font-bold">8,543</p>
-            </div>
-            <div className="bg-purple-100 dark:bg-purple-900 p-3 rounded-md text-center">
-              <p className="text-sm text-gray-600 dark:text-gray-300">Customers</p>
-              <p className="text-xl font-bold">3,709</p>
-            </div>
-            <div className="bg-yellow-100 dark:bg-yellow-900 p-3 rounded-md text-center">
-              <p className="text-sm text-gray-600 dark:text-gray-300">Avg. Order</p>
-              <p className="text-xl font-bold">$142</p>
-            </div>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <h2 className="text-2xl font-bold mb-6">Sample Dashboards</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* Sample Dashboard 1 */}
+          <Card className="p-6 shadow-lg cursor-pointer hover:shadow-xl transition-all duration-300" onClick={() => navigateTo('/dashboards/sales')}>
+            <h3 className="text-lg font-medium mb-4">Sales Performance Dashboard</h3>
             <div className="h-40 bg-gray-100 dark:bg-gray-700 rounded-md flex items-center justify-center">
-              <div className="w-full px-4">
-                <div className="h-4 bg-blue-500 w-full mb-2 rounded-sm"></div>
-                <div className="h-4 bg-green-500 w-3/4 mb-2 rounded-sm"></div>
-                <div className="h-4 bg-purple-500 w-1/2 mb-2 rounded-sm"></div>
-                <div className="h-4 bg-yellow-500 w-2/3 rounded-sm"></div>
+              <div className="grid grid-cols-2 gap-2 w-full p-4">
+                <div className="h-8 bg-blue-500 rounded-sm"></div>
+                <div className="h-8 bg-green-500 rounded-sm"></div>
+                <div className="h-8 bg-purple-500 rounded-sm"></div>
+                <div className="h-8 bg-yellow-500 rounded-sm"></div>
               </div>
             </div>
+            <p className="text-sm text-gray-500 mt-4">Last updated: April 5, 2025</p>
+          </Card>
+          
+          {/* Sample Dashboard 2 */}
+          <Card className="p-6 shadow-lg cursor-pointer hover:shadow-xl transition-all duration-300" onClick={() => navigateTo('/dashboards/marketing')}>
+            <h3 className="text-lg font-medium mb-4">Marketing Campaign Insights</h3>
             <div className="h-40 bg-gray-100 dark:bg-gray-700 rounded-md flex items-center justify-center">
-              <div className="w-40 h-40 relative">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-20 h-20 rounded-full bg-white dark:bg-gray-800"></div>
-                </div>
+              <div className="w-32 h-32 relative">
                 <div className="absolute inset-0" style={{clipPath: 'polygon(50% 50%, 100% 0%, 100% 50%)'}}>
                   <div className="w-full h-full bg-blue-500"></div>
                 </div>
@@ -145,10 +117,93 @@ const BiCanvasContent: React.FC<BiCanvasContentProps> = ({ activePage }) => {
                 </div>
               </div>
             </div>
-          </div>
+            <p className="text-sm text-gray-500 mt-4">Last updated: April 3, 2025</p>
+          </Card>
           
-          <p className="text-sm text-gray-500 mt-4">Click to view full dashboard</p>
-        </Card>
+          {/* Sample Dashboard 3 */}
+          <Card className="p-6 shadow-lg cursor-pointer hover:shadow-xl transition-all duration-300" onClick={() => navigateTo('/dashboards/operations')}>
+            <h3 className="text-lg font-medium mb-4">Operations Overview</h3>
+            <div className="h-40 bg-gray-100 dark:bg-gray-700 rounded-md flex items-center justify-center">
+              <div className="w-full p-4 space-y-2">
+                <div className="h-6 bg-blue-500 w-full rounded-sm"></div>
+                <div className="h-6 bg-green-500 w-3/4 rounded-sm"></div>
+                <div className="h-6 bg-yellow-500 w-1/2 rounded-sm"></div>
+                <div className="h-6 bg-red-500 w-1/4 rounded-sm"></div>
+              </div>
+            </div>
+            <p className="text-sm text-gray-500 mt-4">Last updated: April 4, 2025</p>
+          </Card>
+          
+          {/* Sample Dashboard 4 */}
+          <Card className="p-6 shadow-lg cursor-pointer hover:shadow-xl transition-all duration-300" onClick={() => navigateTo('/dashboards/finance')}>
+            <h3 className="text-lg font-medium mb-4">Financial Summary</h3>
+            <div className="h-40 bg-gray-100 dark:bg-gray-700 rounded-md grid grid-cols-2 gap-2 p-4">
+              <div className="flex items-center justify-center">
+                <div className="w-20 h-20 rounded-full bg-green-500 flex items-center justify-center text-white font-bold">
+                  +12%
+                </div>
+              </div>
+              <div className="space-y-2">
+                <div className="h-4 bg-gray-300 dark:bg-gray-600 rounded-full w-full"></div>
+                <div className="h-4 bg-gray-300 dark:bg-gray-600 rounded-full w-5/6"></div>
+                <div className="h-4 bg-gray-300 dark:bg-gray-600 rounded-full w-4/6"></div>
+                <div className="h-4 bg-gray-300 dark:bg-gray-600 rounded-full w-3/6"></div>
+              </div>
+            </div>
+            <p className="text-sm text-gray-500 mt-4">Last updated: April 1, 2025</p>
+          </Card>
+          
+          {/* Sample Dashboard 5 */}
+          <Card className="p-6 shadow-lg cursor-pointer hover:shadow-xl transition-all duration-300" onClick={() => navigateTo('/dashboards/customers')}>
+            <h3 className="text-lg font-medium mb-4">Customer Analytics</h3>
+            <div className="h-40 bg-gray-100 dark:bg-gray-700 rounded-md flex items-center justify-center">
+              <div className="grid grid-cols-3 gap-2 w-full p-4">
+                <div className="flex flex-col items-center">
+                  <div className="w-12 h-12 rounded-full bg-blue-500"></div>
+                  <div className="h-2 w-10 mt-2 bg-gray-300"></div>
+                </div>
+                <div className="flex flex-col items-center">
+                  <div className="w-16 h-16 rounded-full bg-green-500"></div>
+                  <div className="h-2 w-12 mt-2 bg-gray-300"></div>
+                </div>
+                <div className="flex flex-col items-center">
+                  <div className="w-10 h-10 rounded-full bg-purple-500"></div>
+                  <div className="h-2 w-8 mt-2 bg-gray-300"></div>
+                </div>
+              </div>
+            </div>
+            <p className="text-sm text-gray-500 mt-4">Last updated: April 2, 2025</p>
+          </Card>
+          
+          {/* Sample Dashboard 6 */}
+          <Card className="p-6 shadow-lg cursor-pointer hover:shadow-xl transition-all duration-300" onClick={() => navigateTo('/dashboards/inventory')}>
+            <h3 className="text-lg font-medium mb-4">Inventory Management</h3>
+            <div className="h-40 bg-gray-100 dark:bg-gray-700 rounded-md p-4">
+              <div className="grid grid-cols-4 grid-rows-4 gap-1 h-full">
+                <div className="bg-green-500 col-span-1 row-span-1"></div>
+                <div className="bg-green-400 col-span-1 row-span-1"></div>
+                <div className="bg-yellow-500 col-span-1 row-span-1"></div>
+                <div className="bg-red-500 col-span-1 row-span-1"></div>
+                
+                <div className="bg-green-500 col-span-1 row-span-1"></div>
+                <div className="bg-green-400 col-span-1 row-span-1"></div>
+                <div className="bg-green-300 col-span-1 row-span-1"></div>
+                <div className="bg-yellow-500 col-span-1 row-span-1"></div>
+                
+                <div className="bg-green-500 col-span-1 row-span-1"></div>
+                <div className="bg-yellow-500 col-span-1 row-span-1"></div>
+                <div className="bg-yellow-400 col-span-1 row-span-1"></div>
+                <div className="bg-red-500 col-span-1 row-span-1"></div>
+                
+                <div className="bg-yellow-500 col-span-1 row-span-1"></div>
+                <div className="bg-yellow-400 col-span-1 row-span-1"></div>
+                <div className="bg-red-500 col-span-1 row-span-1"></div>
+                <div className="bg-red-400 col-span-1 row-span-1"></div>
+              </div>
+            </div>
+            <p className="text-sm text-gray-500 mt-4">Last updated: April 6, 2025</p>
+          </Card>
+        </div>
       </div>
     </div>
   );

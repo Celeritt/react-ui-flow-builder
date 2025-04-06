@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { ChevronDown, ChevronRight, Database, FileText, Home, Search, Settings, User, Layers, Server, Book, Clipboard, Bell, Key, Upload, CloudUpload, Menu, Plus, ArrowRight } from 'lucide-react';
+import { ChevronDown, ChevronRight, Database, FileText, Home, Search, Settings, User, Layers, Server, Book, Clipboard, Bell, Key, Upload, CloudUpload, Menu, Plus, ArrowRight, PieChart, Hammer, Spanner } from 'lucide-react';
 import { cn } from "@/lib/utils";
 
 interface SidebarProps {
@@ -114,26 +114,19 @@ const Sidebar: React.FC<SidebarProps> = ({
       label: 'Datahub',
       icon: <Database size={18} />,
       children: [
-        { id: 'datahub-connectors', label: 'HutchDB' },
-        { id: 'datahub-s3', label: 'AWS S3' },
-        { id: 'datahub-azure', label: 'Azure Blob/ADLS' },
-        { id: 'datahub-gcp', label: 'Google Cloud Storage' },
         { id: 'datahub-upload', label: 'Upload to Lake', icon: <Upload size={16} /> }
       ]
     },
     {
       id: 'bi-canvas',
       label: 'BI Canvas',
-      icon: <FileText size={18} />,
-      children: [
-        { id: 'bi-canvas-vizualizer', label: 'Add Viz Block', url: '/viz-builder' },
-        { id: 'bi-canvas-dashboards', label: 'Dashboards', url: '/dashboards' }
-      ]
+      icon: <PieChart size={18} />,
+      children: []
     },
     {
       id: 'works',
       label: 'Works',
-      icon: <FileText size={18} />,
+      icon: <Spanner size={18} />,
       children: [
         { id: 'works-workbooks', label: 'Workbooks' },
         { id: 'works-scheduler', label: 'Scheduled Jobs' }
@@ -143,11 +136,7 @@ const Sidebar: React.FC<SidebarProps> = ({
       id: 'query',
       label: 'Query',
       icon: <Search size={18} />,
-      children: [
-        { id: 'query-sql-editor', label: 'SQL Editor', url: '/sql-editor' },
-        { id: 'query-saved-queries', label: 'Saved Queries' },
-        { id: 'query-history', label: 'Query History' }
-      ]
+      children: []
     },
     {
       id: 'admin',
@@ -203,7 +192,7 @@ const Sidebar: React.FC<SidebarProps> = ({
       collapsed ? "w-16" : "w-64"
     )}>
       <div className="p-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
-        {!collapsed && <h1 className="text-xl font-bold text-gray-800 dark:text-gray-200">Data Platform</h1>}
+        {!collapsed && <h1 className="text-xl font-bold text-gray-800 dark:text-gray-200"></h1>}
         <button 
           onClick={toggleSidebar} 
           className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 focus:outline-none"

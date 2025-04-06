@@ -4,7 +4,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { ArrowRight, Plus, Search, X } from "lucide-react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogClose } from "@/components/ui/dialog";
 import { useState } from "react";
 
 interface QueryContentProps {
@@ -14,6 +14,7 @@ interface QueryContentProps {
 const QueryContent: React.FC<QueryContentProps> = ({ activePage }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
+  const [historyTab, setHistoryTab] = useState("datalake");
 
   const handleRedirectToSqlEditor = () => {
     // This would normally navigate to the SQL editor
@@ -149,7 +150,7 @@ const QueryContent: React.FC<QueryContentProps> = ({ activePage }) => {
 
   const renderQueryHistory = () => {
     return (
-      <Dialog open={true} onOpenChange={setIsHistoryOpen}>
+      <Dialog open={isHistoryOpen} onOpenChange={setIsHistoryOpen}>
         <DialogContent className="max-w-4xl">
           <DialogHeader>
             <DialogTitle className="text-xl">Query History</DialogTitle>
@@ -174,27 +175,66 @@ const QueryContent: React.FC<QueryContentProps> = ({ activePage }) => {
               </div>
             </div>
             
-            <div className="space-y-4">
-              {[1, 2, 3, 4, 5].map((i) => (
-                <Card key={i} className="p-4">
-                  <div className="flex justify-between items-start mb-2">
-                    <div>
-                      <p className="font-mono text-sm">
-                        SELECT * FROM customers WHERE signup_date {'>'} '2025-03-01' ORDER BY signup_date DESC LIMIT 100
-                      </p>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Button variant="ghost" size="sm">Save</Button>
-                      <Button variant="ghost" size="sm">Run Again</Button>
-                    </div>
-                  </div>
-                  <div className="flex justify-between items-center text-xs text-gray-500">
-                    <span>Run at: April 6, 2025 10:23 AM</span>
-                    <span>Runtime: 1.2s • Rows: 84</span>
-                  </div>
-                </Card>
-              ))}
-            </div>
+            <Tabs defaultValue="datalake" onValueChange={setHistoryTab}>
+              <TabsList className="w-full md:w-auto mb-4">
+                <TabsTrigger value="datalake">Datalake Queries</TabsTrigger>
+                <TabsTrigger value="adhoc">Adhoc Queries</TabsTrigger>
+              </TabsList>
+              
+              <TabsContent value="datalake">
+                <div className="space-y-4">
+                  {[1, 2, 3].map((i) => (
+                    <Card key={i} className="p-4">
+                      <div className="flex justify-between items-start mb-2">
+                        <div>
+                          <p className="font-mono text-sm">
+                            SELECT * FROM customers WHERE signup_date {'>'} '2025-03-01' ORDER BY signup_date DESC LIMIT 100
+                          </p>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Button variant="ghost" size="sm">Save</Button>
+                          <Button variant="ghost" size="sm">Run Again</Button>
+                        </div>
+                      </div>
+                      <div className="flex justify-between items-center text-xs text-gray-500">
+                        <span>Run at: April 6, 2025 10:23 AM</span>
+                        <span>Runtime: 1.2s • Rows: 84</span>
+                      </div>
+                    </Card>
+                  ))}
+                </div>
+              </TabsContent>
+              
+              <TabsContent value="adhoc">
+                <div className="space-y-4">
+                  {[1, 2].map((i) => (
+                    <Card key={i} className="p-4">
+                      <div className="flex justify-between items-start mb-2">
+                        <div>
+                          <p className="font-mono text-sm">
+                            SELECT * FROM ad_hoc_table_{i} WHERE created_date {'>'} '2025-04-01'
+                          </p>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Button variant="ghost" size="sm">Save</Button>
+                          <Button variant="ghost" size="sm">Run Again</Button>
+                        </div>
+                      </div>
+                      <div className="flex justify-between items-center text-xs text-gray-500">
+                        <span>Run at: April {i + 4}, 2025 09:15 AM</span>
+                        <span>Runtime: 0.8s • Rows: 42</span>
+                      </div>
+                    </Card>
+                  ))}
+                </div>
+              </TabsContent>
+            </Tabs>
+          </div>
+          
+          <div className="flex justify-end mt-4">
+            <DialogClose asChild>
+              <Button variant="outline">Close</Button>
+            </DialogClose>
           </div>
         </DialogContent>
       </Dialog>
@@ -208,6 +248,33 @@ const QueryContent: React.FC<QueryContentProps> = ({ activePage }) => {
         <p className="text-lg text-gray-600 mb-8">
           Access and manage your SQL queries across the data lake.
         </p>
+        
+        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md mb-8">
+          <h3 className="text-xl font-semibold mb-3">Query Features</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div>
+              <h4 className="text-lg font-medium mb-2">SQL Editor</h4>
+              <p className="text-gray-600 dark:text-gray-300 mb-4">
+                Write and execute SQL queries directly against your data sources. Analyze data from multiple connected sources
+                with our high-performance query engine.
+              </p>
+            </div>
+            <div>
+              <h4 className="text-lg font-medium mb-2">Saved Queries</h4>
+              <p className="text-gray-600 dark:text-gray-300 mb-4">
+                Save frequently used queries for quick access. Share your queries with team members and mark important
+                queries as certified for organization-wide use.
+              </p>
+            </div>
+            <div>
+              <h4 className="text-lg font-medium mb-2">Query History</h4>
+              <p className="text-gray-600 dark:text-gray-300 mb-4">
+                Access your recent query execution history. Reuse previous queries, track performance metrics,
+                and save successful queries for future use.
+              </p>
+            </div>
+          </div>
+        </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <Card className="p-6 hover:shadow-md transition-shadow cursor-pointer" onClick={handleRedirectToSqlEditor}>
@@ -253,6 +320,9 @@ const QueryContent: React.FC<QueryContentProps> = ({ activePage }) => {
       handleRedirectToSqlEditor();
     } else if (pageId === 'query-history') {
       setIsHistoryOpen(true);
+    } else if (pageId === 'query-saved-queries') {
+      // Navigate to saved queries
+      // For demo, we'll just show the saved queries in the current page
     }
   };
 
@@ -262,7 +332,12 @@ const QueryContent: React.FC<QueryContentProps> = ({ activePage }) => {
   } else if (activePage === 'query-saved-queries') {
     return renderSavedQueries();
   } else if (activePage === 'query-history') {
-    return renderQueryHistory();
+    return (
+      <>
+        {renderQueryOverview()}
+        {renderQueryHistory()}
+      </>
+    );
   } else {
     return renderQueryOverview();
   }

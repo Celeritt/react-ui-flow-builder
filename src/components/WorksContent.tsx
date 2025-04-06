@@ -1,8 +1,7 @@
-
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card } from "@/components/ui/card";
-import { ArrowRight, Plus } from "lucide-react";
+import { ArrowRight, Plus, Hammer, Spanner } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 interface WorksContentProps {
@@ -209,48 +208,40 @@ const WorksContent: React.FC<WorksContentProps> = ({ activePage }) => {
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
           <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
-            <h3 className="text-xl font-semibold mb-3">Workspace</h3>
+            <h3 className="text-xl font-semibold mb-3">Create Workbook</h3>
             <p className="text-gray-600 dark:text-gray-300 mb-4">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum et nisi at nunc consectetur pulvinar. 
-              Nullam facilisis dui vitae mi faucibus, in efficitur quam facilisis.
+              Workbooks are collaborative spaces where you can create, share, and analyze data with your team.
             </p>
             <div className="flex justify-center my-6">
               <div className="h-40 w-full max-w-xs bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center">
-                <div className="grid grid-cols-3 gap-2 p-4">
-                  <div className="h-12 w-12 bg-white dark:bg-gray-700 rounded-full flex items-center justify-center">
-                    <div className="h-8 w-8 bg-blue-500 rounded-full"></div>
-                  </div>
-                  <div className="h-12 w-12 bg-white dark:bg-gray-700 rounded-full flex items-center justify-center">
-                    <div className="h-8 w-8 bg-green-500 rounded-full"></div>
-                  </div>
-                  <div className="h-12 w-12 bg-white dark:bg-gray-700 rounded-full flex items-center justify-center">
-                    <div className="h-8 w-8 bg-purple-500 rounded-full"></div>
-                  </div>
-                </div>
+                <Hammer size={64} className="text-blue-500 dark:text-blue-300" />
               </div>
             </div>
+            <Button 
+              className="w-full"
+              onClick={handleCreateWorkbook}
+            >
+              Create New Workbook <ArrowRight className="ml-2" size={16} />
+            </Button>
           </div>
 
           <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
-            <h3 className="text-xl font-semibold mb-3">Data Mart & Collaboration</h3>
+            <h3 className="text-xl font-semibold mb-3">Create a Space</h3>
             <p className="text-gray-600 dark:text-gray-300 mb-4">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum et nisi at nunc consectetur pulvinar. 
-              Nullam facilisis dui vitae mi faucibus, in efficitur quam facilisis.
+              Spaces provide dedicated environments for team collaboration on specific projects or data sets.
             </p>
             <div className="flex justify-center my-6">
-              <div className="h-40 w-full max-w-xs bg-gradient-to-r from-purple-100 to-pink-100 dark:from-purple-900 dark:to-pink-900 rounded-lg p-4">
-                <div className="h-full w-full flex items-center justify-center">
-                  <div className="relative">
-                    <div className="h-20 w-20 bg-white dark:bg-gray-800 rounded-md absolute top-0 left-0 transform -rotate-6"></div>
-                    <div className="h-20 w-20 bg-white dark:bg-gray-800 rounded-md absolute top-2 left-4"></div>
-                    <div className="h-20 w-20 bg-white dark:bg-gray-800 rounded-md absolute top-0 left-8 transform rotate-6 z-10"></div>
-                    <div className="h-4 w-16 bg-blue-500 rounded-sm absolute top-4 left-10 z-20"></div>
-                    <div className="h-4 w-12 bg-green-500 rounded-sm absolute top-10 left-12 z-20"></div>
-                    <div className="h-4 w-14 bg-purple-500 rounded-sm absolute top-16 left-9 z-20"></div>
-                  </div>
-                </div>
+              <div className="h-40 w-full max-w-xs bg-gradient-to-r from-purple-100 to-pink-100 dark:from-purple-900 dark:to-pink-900 rounded-lg flex items-center justify-center">
+                <Spanner size={64} className="text-purple-500 dark:text-purple-300" />
               </div>
             </div>
+            <Button 
+              className="w-full"
+              onClick={() => navigate('/spaces')}
+              variant="outline"
+            >
+              Create New Space <ArrowRight className="ml-2" size={16} />
+            </Button>
           </div>
         </div>
         
