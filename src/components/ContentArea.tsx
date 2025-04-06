@@ -1,6 +1,10 @@
 
 import { cn } from "@/lib/utils";
 import DatahubContent from "./DatahubContent";
+import BiCanvasContent from "./BiCanvasContent";
+import WorksContent from "./WorksContent";
+import QueryContent from "./QueryContent";
+import { useState } from "react";
 
 interface ContentAreaProps {
   activeSection: string | null;
@@ -37,23 +41,31 @@ const contentMapping: ContentMapping = {
   },
   works: {
     'works-scheduler': {
-      title: 'Scheduler',
+      title: 'Scheduled Jobs',
       description: 'Schedule project tasks'
+    },
+    'works-workbooks': {
+      title: 'Workbooks',
+      description: 'Manage your workbooks'
     }
   },
   query: {
-    'query-sql-lab': {
-      title: 'SQL Lab',
+    'query-sql-editor': {
+      title: 'SQL Editor',
       description: 'Run SQL queries on your data'
     },
-    'query-workbooks': {
-      title: 'Workbooks',
-      description: 'Manage your query workbooks'
+    'query-saved-queries': {
+      title: 'Saved Queries',
+      description: 'View and manage saved queries'
+    },
+    'query-history': {
+      title: 'Query History',
+      description: 'View your query history'
     }
   },
   'bi-canvas': {
     'bi-canvas-vizualizer': {
-      title: 'Add Vizualizer',
+      title: 'Add Viz Block',
       description: 'Create new data visualizations'
     },
     'bi-canvas-dashboards': {
@@ -107,6 +119,21 @@ const ContentArea: React.FC<ContentAreaProps> = ({ activeSection, activePage }) 
     // Handle special case for Datahub section
     if (activeSection === 'datahub') {
       return <DatahubContent activePage={activePage} />;
+    }
+
+    // Handle special case for BI Canvas section
+    if (activeSection === 'bi-canvas') {
+      return <BiCanvasContent activePage={activePage} />;
+    }
+
+    // Handle special case for Works section
+    if (activeSection === 'works') {
+      return <WorksContent activePage={activePage} />;
+    }
+
+    // Handle special case for Query section
+    if (activeSection === 'query') {
+      return <QueryContent activePage={activePage} />;
     }
 
     // Handle other sections

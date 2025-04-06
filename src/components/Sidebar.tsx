@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { ChevronDown, ChevronRight, Database, FileText, Home, Search, Settings, User, Layers, Server, Book, Clipboard, Bell, Key, Upload, CloudUpload, Menu } from 'lucide-react';
+import { ChevronDown, ChevronRight, Database, FileText, Home, Search, Settings, User, Layers, Server, Book, Clipboard, Bell, Key, Upload, CloudUpload, Menu, Plus, ArrowRight } from 'lucide-react';
 import { cn } from "@/lib/utils";
 
 interface SidebarProps {
@@ -22,6 +22,7 @@ interface MenuItemProps {
   level?: number;
   isAdmin?: boolean;
   currentUserIsAdmin?: boolean;
+  activePage?: string | null;
 }
 
 interface MenuItem {
@@ -30,6 +31,7 @@ interface MenuItem {
   icon?: React.ReactNode;
   children?: MenuItem[];
   isAdmin?: boolean;
+  url?: string;
 }
 
 const MenuItem: React.FC<MenuItemProps> = ({ 
@@ -43,7 +45,8 @@ const MenuItem: React.FC<MenuItemProps> = ({
   onChildClick,
   level = 0,
   isAdmin = false,
-  currentUserIsAdmin = false
+  currentUserIsAdmin = false,
+  activePage = null
 }) => {
   // Don't render admin items if user is not an admin
   if (isAdmin && !currentUserIsAdmin) return null;
@@ -123,8 +126,8 @@ const Sidebar: React.FC<SidebarProps> = ({
       label: 'BI Canvas',
       icon: <FileText size={18} />,
       children: [
-        { id: 'bi-canvas-vizualizer', label: 'Add Vizualizer' },
-        { id: 'bi-canvas-dashboards', label: 'Dashboards' }
+        { id: 'bi-canvas-vizualizer', label: 'Add Viz Block', url: '/viz-builder' },
+        { id: 'bi-canvas-dashboards', label: 'Dashboards', url: '/dashboards' }
       ]
     },
     {
@@ -132,7 +135,8 @@ const Sidebar: React.FC<SidebarProps> = ({
       label: 'Works',
       icon: <FileText size={18} />,
       children: [
-        { id: 'works-scheduler', label: 'Scheduler' }
+        { id: 'works-workbooks', label: 'Workbooks' },
+        { id: 'works-scheduler', label: 'Scheduled Jobs' }
       ]
     },
     {
@@ -140,8 +144,9 @@ const Sidebar: React.FC<SidebarProps> = ({
       label: 'Query',
       icon: <Search size={18} />,
       children: [
-        { id: 'query-sql-lab', label: 'SQL Lab' },
-        { id: 'query-workbooks', label: 'Workbooks' }
+        { id: 'query-sql-editor', label: 'SQL Editor', url: '/sql-editor' },
+        { id: 'query-saved-queries', label: 'Saved Queries' },
+        { id: 'query-history', label: 'Query History' }
       ]
     },
     {
@@ -216,6 +221,7 @@ const Sidebar: React.FC<SidebarProps> = ({
             onChildClick={(childId) => handlePageClick(item.id, childId)}
             isAdmin={item.isAdmin}
             currentUserIsAdmin={currentUserIsAdmin}
+            activePage={activePage}
           />
         ))}
       </div>
