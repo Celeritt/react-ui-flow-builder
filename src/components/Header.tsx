@@ -15,6 +15,14 @@ const Header = () => {
   const { theme, setTheme } = useTheme();
   const [selectedLakehouse, setSelectedLakehouse] = useState('production');
   
+  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // This would normally call your backend search function
+    console.log("Search functionality would connect to backend here");
+    // Example of how to connect to your backend:
+    // yourBackendSearchFunction(searchTerm);
+  };
+  
   return (
     <div className="h-14 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between px-4">
       <div className="flex items-center">
@@ -36,7 +44,7 @@ const Header = () => {
           </Select>
         </div>
         
-        <div className="flex items-center relative w-64">
+        <form onSubmit={handleSearch} className="flex items-center relative w-64">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
             <Search size={16} className="text-gray-400" />
           </div>
@@ -45,7 +53,7 @@ const Header = () => {
             placeholder="Search..." 
             className="block w-full pl-10 pr-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 rounded-md text-sm focus:outline-none focus:ring-green-500 focus:border-green-500"
           />
-        </div>
+        </form>
         
         <button className="text-sm text-green-600 dark:text-green-400 hover:text-green-800 dark:hover:text-green-300">
           Help

@@ -14,12 +14,7 @@ const WorksContent: React.FC<WorksContentProps> = ({ activePage }) => {
 
   const handleCreateWorkbook = () => {
     // This would normally navigate to the create workbook page
-    // For demo purposes, we're using an alert
     alert("Creating new workbook (This will be replaced with actual functionality in production)");
-    // Implementation example:
-    // navigate('/works/workbooks/create');
-    // or call your backend function:
-    // createNewWorkbook().then(() => refreshWorkbooks());
   };
 
   const renderWorkbooks = () => {
@@ -60,11 +55,6 @@ const WorksContent: React.FC<WorksContentProps> = ({ activePage }) => {
                 </Card>
               ))}
             </div>
-            <p className="text-sm text-gray-500 mt-4 italic">
-              {/* Add backend integration here */}
-              {/* Workbooks will be populated from your existing backend function */}
-              {/* e.g. getRecentWorkbooks().then(setWorkbooks) */}
-            </p>
           </TabsContent>
           
           <TabsContent value="my" className="mt-6">
@@ -87,11 +77,6 @@ const WorksContent: React.FC<WorksContentProps> = ({ activePage }) => {
                 </Card>
               ))}
             </div>
-            <p className="text-sm text-gray-500 mt-4 italic">
-              {/* Add backend integration here */}
-              {/* Workbooks will be populated from your existing backend function */}
-              {/* e.g. getMyWorkbooks().then(setWorkbooks) */}
-            </p>
           </TabsContent>
           
           <TabsContent value="favorite" className="mt-6">
@@ -114,11 +99,6 @@ const WorksContent: React.FC<WorksContentProps> = ({ activePage }) => {
                 </Card>
               ))}
             </div>
-            <p className="text-sm text-gray-500 mt-4 italic">
-              {/* Add backend integration here */}
-              {/* Workbooks will be populated from your existing backend function */}
-              {/* e.g. getFavoriteWorkbooks().then(setWorkbooks) */}
-            </p>
           </TabsContent>
         </Tabs>
       </div>
@@ -183,18 +163,96 @@ const WorksContent: React.FC<WorksContentProps> = ({ activePage }) => {
               </table>
             </div>
           </div>
-          
+        </Card>
+      </div>
+    );
+  };
+
+  const renderSpaces = () => {
+    return (
+      <div className="container mx-auto">
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-2xl font-bold">Spaces</h2>
           <Button>
             <Plus className="mr-2" size={16} />
-            Schedule New Job
+            New Space
           </Button>
+        </div>
+        
+        <Tabs defaultValue="my-spaces">
+          <TabsList className="w-full md:w-auto">
+            <TabsTrigger value="my-spaces">My Spaces</TabsTrigger>
+            <TabsTrigger value="public-spaces">Public Spaces</TabsTrigger>
+          </TabsList>
           
-          <p className="text-sm text-gray-500 mt-6 italic">
-            {/* Add backend integration here */}
-            {/* Jobs will be populated from your existing backend function */}
-            {/* e.g. getScheduledJobs().then(setJobs) */}
-          </p>
-        </Card>
+          <TabsContent value="my-spaces" className="mt-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[1, 2, 3].map((i) => (
+                <Card key={i} className="p-6 hover:shadow-md transition-shadow cursor-pointer">
+                  <div className="flex justify-between mb-4">
+                    <h3 className="text-lg font-medium">Marketing Analytics</h3>
+                    <div className="p-2 bg-blue-100 text-blue-600 rounded-full">
+                      {i % 2 === 0 ? <Wrench size={16} /> : <Hammer size={16} />}
+                    </div>
+                  </div>
+                  <p className="text-sm text-gray-600 mb-6">
+                    Collaborative space for marketing team.
+                  </p>
+                  <div className="flex justify-between items-center">
+                    <div className="flex -space-x-2">
+                      <div className="w-8 h-8 rounded-full bg-blue-500 border-2 border-white"></div>
+                      <div className="w-8 h-8 rounded-full bg-green-500 border-2 border-white"></div>
+                      <div className="w-8 h-8 rounded-full bg-yellow-500 border-2 border-white flex items-center justify-center text-xs text-white">+3</div>
+                    </div>
+                    <span className="text-xs text-gray-500">Updated 2 days ago</span>
+                  </div>
+                  
+                  <div className="mt-4 pt-4 border-t border-gray-200">
+                    <div className="flex justify-between text-xs text-gray-500">
+                      <span>6 workbooks</span>
+                      <span>12 dashboards</span>
+                      <span>18 visualizations</span>
+                    </div>
+                  </div>
+                </Card>
+              ))}
+            </div>
+          </TabsContent>
+          
+          <TabsContent value="public-spaces" className="mt-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[1, 2, 3, 4, 5, 6].map((i) => (
+                <Card key={i} className="p-6 hover:shadow-md transition-shadow cursor-pointer">
+                  <div className="flex justify-between mb-4">
+                    <h3 className="text-lg font-medium">Corporate KPIs</h3>
+                    <div className="p-2 bg-green-100 text-green-600 rounded-full">
+                      <Wrench size={16} />
+                    </div>
+                  </div>
+                  <p className="text-sm text-gray-600 mb-6">
+                    Company-wide space for tracking key performance indicators.
+                  </p>
+                  <div className="flex justify-between items-center">
+                    <div className="flex -space-x-2">
+                      <div className="w-8 h-8 rounded-full bg-purple-500 border-2 border-white"></div>
+                      <div className="w-8 h-8 rounded-full bg-red-500 border-2 border-white"></div>
+                      <div className="w-8 h-8 rounded-full bg-indigo-500 border-2 border-white flex items-center justify-center text-xs text-white">+8</div>
+                    </div>
+                    <span className="text-xs text-gray-500">Updated daily</span>
+                  </div>
+                  
+                  <div className="mt-4 pt-4 border-t border-gray-200">
+                    <div className="flex justify-between text-xs text-gray-500">
+                      <span>15 workbooks</span>
+                      <span>8 dashboards</span>
+                      <span>42 visualizations</span>
+                    </div>
+                  </div>
+                </Card>
+              ))}
+            </div>
+          </TabsContent>
+        </Tabs>
       </div>
     );
   };
@@ -203,15 +261,12 @@ const WorksContent: React.FC<WorksContentProps> = ({ activePage }) => {
     return (
       <div className="container mx-auto">
         <h2 className="text-3xl font-bold mb-6">Welcome to Works</h2>
-        <p className="text-lg text-gray-600 mb-8">
-          Your collaborative workspace for data analytics, workbooks, and scheduled jobs.
-        </p>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
           <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
             <h3 className="text-xl font-semibold mb-3">Create Workbook</h3>
             <p className="text-gray-600 dark:text-gray-300 mb-4">
-              Workbooks are collaborative spaces where you can create, share, and analyze data with your team.
+              Start building your data analytics workbook.
             </p>
             <div className="flex justify-center my-6">
               <div className="h-40 w-full max-w-xs bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center">
@@ -219,7 +274,7 @@ const WorksContent: React.FC<WorksContentProps> = ({ activePage }) => {
               </div>
             </div>
             <Button 
-              className="w-full"
+              className="w-full bg-white text-green-600 border-green-600 hover:bg-green-600 hover:text-white"
               onClick={handleCreateWorkbook}
             >
               Create New Workbook <ArrowRight className="ml-2" size={16} />
@@ -229,7 +284,7 @@ const WorksContent: React.FC<WorksContentProps> = ({ activePage }) => {
           <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
             <h3 className="text-xl font-semibold mb-3">Create a Space</h3>
             <p className="text-gray-600 dark:text-gray-300 mb-4">
-              Spaces provide dedicated environments for team collaboration on specific projects or data sets.
+              Set up a collaborative environment for your team.
             </p>
             <div className="flex justify-center my-6">
               <div className="h-40 w-full max-w-xs bg-gradient-to-r from-purple-100 to-pink-100 dark:from-purple-900 dark:to-pink-900 rounded-lg flex items-center justify-center">
@@ -237,31 +292,12 @@ const WorksContent: React.FC<WorksContentProps> = ({ activePage }) => {
               </div>
             </div>
             <Button 
-              className="w-full"
-              onClick={() => navigate('/spaces')}
-              variant="outline"
+              className="w-full bg-white text-green-600 border-green-600 hover:bg-green-600 hover:text-white"
+              onClick={() => navigate('/works/spaces')}
             >
               Create New Space <ArrowRight className="ml-2" size={16} />
             </Button>
           </div>
-        </div>
-        
-        <div className="flex flex-col md:flex-row gap-6">
-          <Button 
-            className="flex-1 py-6" 
-            onClick={() => navigate('/works/workbooks')}
-          >
-            Explore Workbooks
-            <ArrowRight className="ml-2" size={16} />
-          </Button>
-          <Button 
-            className="flex-1 py-6" 
-            onClick={() => navigate('/works/scheduler')}
-            variant="outline"
-          >
-            Manage Scheduled Jobs
-            <ArrowRight className="ml-2" size={16} />
-          </Button>
         </div>
       </div>
     );
@@ -272,6 +308,8 @@ const WorksContent: React.FC<WorksContentProps> = ({ activePage }) => {
     return renderWorkbooks();
   } else if (activePage === 'works-scheduler') {
     return renderScheduledJobs();
+  } else if (activePage === 'works-spaces') {
+    return renderSpaces();
   } else {
     return renderWorksOverview();
   }

@@ -1,338 +1,243 @@
-import React, { useState } from 'react';
-import { Card } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Database, Cloud, Upload, FileText, BarChart } from 'lucide-react';
+
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Card } from "@/components/ui/card";
+import { Upload, ArrowUpDown, FileUp, Database, Server } from "lucide-react";
+import { useState } from "react";
 
 interface DatahubContentProps {
   activePage: string | null;
 }
 
 const DatahubContent: React.FC<DatahubContentProps> = ({ activePage }) => {
-  const [selectedUploadType, setSelectedUploadType] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState('hutchdb');
-
+  const [activeTab, setActiveTab] = useState("lake");
+  
   const handleAwsLogin = () => {
-    window.open('https://signin.aws.amazon.com/console', '_blank');
+    window.open("https://aws.amazon.com/console/", "_blank");
+  };
+
+  const handleGcsLogin = () => {
+    window.open("https://console.cloud.google.com/", "_blank");
   };
 
   const handleAzureLogin = () => {
-    window.open('https://portal.azure.com/', '_blank');
+    window.open("https://portal.azure.com/", "_blank");
   };
 
-  const handleGcpLogin = () => {
-    window.open('https://console.cloud.google.com/', '_blank');
-  };
-
-  const renderUploadSection = () => {
-    return (
-      <div>
-        <h2 className="text-xl font-semibold mb-4">Upload to Lake</h2>
-        <p className="text-gray-600 dark:text-gray-300 mb-6">
-          Upload data to your data lake from various sources.
-        </p>
-        
-        <Tabs defaultValue="sql" className="w-full">
-          <TabsList className="mb-4">
-            <TabsTrigger value="sql">SQL Database</TabsTrigger>
-            <TabsTrigger value="s3">AWS S3</TabsTrigger>
-            <TabsTrigger value="azure">Azure Storage</TabsTrigger>
-            <TabsTrigger value="gcp">Google Cloud</TabsTrigger>
-            <TabsTrigger value="query">Query History</TabsTrigger>
-          </TabsList>
-          
-          <TabsContent value="sql">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              <Card className="p-4 hover:shadow-md cursor-pointer transition-shadow" onClick={() => setSelectedUploadType('csv-sql')}>
-                <div className="flex items-center mb-2">
-                  <Upload className="text-green-600 mr-2" size={18} />
-                  <h3 className="font-medium">Upload CSV to SQL Database</h3>
-                </div>
-                <p className="text-sm text-gray-500">Import CSV data into a SQL table</p>
-              </Card>
-              <Card className="p-4 hover:shadow-md cursor-pointer transition-shadow" onClick={() => setSelectedUploadType('excel-sql')}>
-                <div className="flex items-center mb-2">
-                  <FileText className="text-green-600 mr-2" size={18} />
-                  <h3 className="font-medium">Upload Excel to SQL Database</h3>
-                </div>
-                <p className="text-sm text-gray-500">Import Excel data into a SQL table</p>
-              </Card>
-              <Card className="p-4 hover:shadow-md cursor-pointer transition-shadow" onClick={() => setSelectedUploadType('parquet-sql')}>
-                <div className="flex items-center mb-2">
-                  <BarChart className="text-green-600 mr-2" size={18} />
-                  <h3 className="font-medium">Upload Parquet to SQL Database</h3>
-                </div>
-                <p className="text-sm text-gray-500">Import Parquet files into a SQL table</p>
-              </Card>
-            </div>
-          </TabsContent>
-          
-          <TabsContent value="s3">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              <Card className="p-4 hover:shadow-md cursor-pointer transition-shadow" onClick={() => setSelectedUploadType('csv-s3')}>
-                <div className="flex items-center mb-2">
-                  <Upload className="text-green-600 mr-2" size={18} />
-                  <h3 className="font-medium">Upload CSV to S3</h3>
-                </div>
-                <p className="text-sm text-gray-500">Upload CSV data to an S3 bucket</p>
-              </Card>
-              <Card className="p-4 hover:shadow-md cursor-pointer transition-shadow" onClick={() => setSelectedUploadType('excel-s3')}>
-                <div className="flex items-center mb-2">
-                  <FileText className="text-green-600 mr-2" size={18} />
-                  <h3 className="font-medium">Upload Excel to S3</h3>
-                </div>
-                <p className="text-sm text-gray-500">Upload Excel files to an S3 bucket</p>
-              </Card>
-              <Card className="p-4 hover:shadow-md cursor-pointer transition-shadow" onClick={() => setSelectedUploadType('parquet-s3')}>
-                <div className="flex items-center mb-2">
-                  <BarChart className="text-green-600 mr-2" size={18} />
-                  <h3 className="font-medium">Upload Parquet to S3</h3>
-                </div>
-                <p className="text-sm text-gray-500">Upload Parquet files to an S3 bucket</p>
-              </Card>
-            </div>
-          </TabsContent>
-          
-          <TabsContent value="azure">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              <Card className="p-4 hover:shadow-md cursor-pointer transition-shadow" onClick={() => setSelectedUploadType('csv-azure')}>
-                <div className="flex items-center mb-2">
-                  <Upload className="text-green-600 mr-2" size={18} />
-                  <h3 className="font-medium">Upload CSV to Azure</h3>
-                </div>
-                <p className="text-sm text-gray-500">Upload CSV data to Azure storage</p>
-              </Card>
-              <Card className="p-4 hover:shadow-md cursor-pointer transition-shadow" onClick={() => setSelectedUploadType('excel-azure')}>
-                <div className="flex items-center mb-2">
-                  <FileText className="text-green-600 mr-2" size={18} />
-                  <h3 className="font-medium">Upload Excel to Azure</h3>
-                </div>
-                <p className="text-sm text-gray-500">Upload Excel files to Azure storage</p>
-              </Card>
-              <Card className="p-4 hover:shadow-md cursor-pointer transition-shadow" onClick={() => setSelectedUploadType('parquet-azure')}>
-                <div className="flex items-center mb-2">
-                  <BarChart className="text-green-600 mr-2" size={18} />
-                  <h3 className="font-medium">Upload Parquet to Azure</h3>
-                </div>
-                <p className="text-sm text-gray-500">Upload Parquet files to Azure storage</p>
-              </Card>
-            </div>
-          </TabsContent>
-          
-          <TabsContent value="gcp">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              <Card className="p-4 hover:shadow-md cursor-pointer transition-shadow" onClick={() => setSelectedUploadType('csv-gcp')}>
-                <div className="flex items-center mb-2">
-                  <Upload className="text-green-600 mr-2" size={18} />
-                  <h3 className="font-medium">Upload CSV to GCS</h3>
-                </div>
-                <p className="text-sm text-gray-500">Upload CSV data to Google Cloud Storage</p>
-              </Card>
-              <Card className="p-4 hover:shadow-md cursor-pointer transition-shadow" onClick={() => setSelectedUploadType('excel-gcp')}>
-                <div className="flex items-center mb-2">
-                  <FileText className="text-green-600 mr-2" size={18} />
-                  <h3 className="font-medium">Upload Excel to GCS</h3>
-                </div>
-                <p className="text-sm text-gray-500">Upload Excel files to Google Cloud Storage</p>
-              </Card>
-              <Card className="p-4 hover:shadow-md cursor-pointer transition-shadow" onClick={() => setSelectedUploadType('parquet-gcp')}>
-                <div className="flex items-center mb-2">
-                  <BarChart className="text-green-600 mr-2" size={18} />
-                  <h3 className="font-medium">Upload Parquet to GCS</h3>
-                </div>
-                <p className="text-sm text-gray-500">Upload Parquet files to Google Cloud Storage</p>
-              </Card>
-            </div>
-          </TabsContent>
-          
-          <TabsContent value="query">
-            <div className="p-4 border rounded-md bg-gray-50 dark:bg-gray-800">
-              <h3 className="font-medium text-lg mb-4">Upload through Query History</h3>
-              <p className="mb-4">Select from your recent query results to upload to your data lake.</p>
-              <table className="min-w-full bg-white dark:bg-gray-800 rounded-md overflow-hidden">
-                <thead className="bg-gray-100 dark:bg-gray-700">
-                  <tr>
-                    <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Query</th>
-                    <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                    <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rows</th>
-                    <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-200 dark:divide-gray-600">
-                  <tr>
-                    <td className="px-4 py-2">SELECT * FROM customers</td>
-                    <td className="px-4 py-2">2025-04-05</td>
-                    <td className="px-4 py-2">5,432</td>
-                    <td className="px-4 py-2">
-                      <button className="text-sm text-green-600 hover:text-green-800">Upload</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="px-4 py-2">SELECT * FROM sales WHERE date &gt; '2025-03-01'</td>
-                    <td className="px-4 py-2">2025-04-04</td>
-                    <td className="px-4 py-2">2,154</td>
-                    <td className="px-4 py-2">
-                      <button className="text-sm text-green-600 hover:text-green-800">Upload</button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </TabsContent>
-        </Tabs>
-        
-        {selectedUploadType && (
-          <div className="mt-6 p-4 border rounded-md">
-            <h3 className="font-medium text-lg mb-4">Upload {selectedUploadType.split('-')[0].toUpperCase()} to {selectedUploadType.split('-')[1].toUpperCase()}</h3>
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium mb-1">Select file</label>
-                <input type="file" className="w-full p-2 border rounded" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-1">Destination</label>
-                <input type="text" className="w-full p-2 border rounded" placeholder="Enter destination path/table" />
-              </div>
-              <div className="flex justify-end gap-2">
-                <button 
-                  className="px-4 py-2 border rounded hover:bg-gray-100 dark:hover:bg-gray-700"
-                  onClick={() => setSelectedUploadType(null)}
-                >
-                  Cancel
-                </button>
-                <button className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">
-                  Upload
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
-    );
-  };
-
-  const renderDatahubContent = () => {
-    if (activePage === 'datahub-upload') {
-      return renderUploadSection();
-    }
-    
+  const renderLakeUpload = () => {
     return (
       <div className="container mx-auto">
-        <h2 className="text-2xl font-bold mb-6">Datahub</h2>
-        <p className="text-lg text-gray-600 mb-6">
-          Connect to and manage your data sources across cloud providers.
-        </p>
+        <h2 className="text-2xl font-bold mb-6">Upload to Data Lake</h2>
         
-        <Tabs defaultValue="hutchdb" value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="mb-4">
-            <TabsTrigger value="hutchdb">HutchDB</TabsTrigger>
-            <TabsTrigger value="s3">AWS S3</TabsTrigger>
-            <TabsTrigger value="azure">Azure Blob/ADLS</TabsTrigger>
-            <TabsTrigger value="gcp">Google Cloud Storage</TabsTrigger>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <Card className="p-6 hover:shadow-md transition-shadow cursor-pointer" onClick={handleAwsLogin}>
+            <div className="flex justify-center mb-4">
+              <Database className="h-12 w-12 text-blue-500" />
+            </div>
+            <h3 className="text-xl text-center font-semibold mb-3">AWS S3</h3>
+            <p className="text-gray-600 dark:text-gray-300 mb-6 text-center">
+              Connect and upload data to Amazon S3 buckets.
+            </p>
+            <Button className="w-full">
+              Login with AWS
+              <ArrowUpDown className="ml-2" size={16} />
+            </Button>
+          </Card>
+          
+          <Card className="p-6 hover:shadow-md transition-shadow cursor-pointer" onClick={handleGcsLogin}>
+            <div className="flex justify-center mb-4">
+              <Database className="h-12 w-12 text-green-500" />
+            </div>
+            <h3 className="text-xl text-center font-semibold mb-3">Google Cloud Storage</h3>
+            <p className="text-gray-600 dark:text-gray-300 mb-6 text-center">
+              Connect and upload data to Google Cloud Storage.
+            </p>
+            <Button className="w-full">
+              Login with GCS
+              <ArrowUpDown className="ml-2" size={16} />
+            </Button>
+          </Card>
+          
+          <Card className="p-6 hover:shadow-md transition-shadow cursor-pointer" onClick={handleAzureLogin}>
+            <div className="flex justify-center mb-4">
+              <Database className="h-12 w-12 text-purple-500" />
+            </div>
+            <h3 className="text-xl text-center font-semibold mb-3">Azure Data Lake</h3>
+            <p className="text-gray-600 dark:text-gray-300 mb-6 text-center">
+              Connect and upload data to Microsoft Azure Data Lake.
+            </p>
+            <Button className="w-full">
+              Login with Azure
+              <ArrowUpDown className="ml-2" size={16} />
+            </Button>
+          </Card>
+        </div>
+        
+        <div className="mt-12">
+          <Card className="p-6">
+            <h3 className="text-xl font-semibold mb-4">Upload Local Files</h3>
+            <div className="border-2 border-dashed border-gray-300 rounded-md p-6 text-center">
+              <FileUp className="h-12 w-12 mx-auto text-gray-400" />
+              <p className="mt-2 text-sm text-gray-500">
+                Drag and drop files here, or click to select files
+              </p>
+              <p className="mt-1 text-xs text-gray-400">
+                Supported formats: CSV, JSON, Parquet, Avro (max 10GB)
+              </p>
+              <Button className="mt-4">
+                <Upload className="mr-2" size={16} />
+                Select Files
+              </Button>
+            </div>
+          </Card>
+        </div>
+      </div>
+    );
+  };
+
+  const renderDatahubMain = () => {
+    return (
+      <div className="container mx-auto">
+        <h2 className="text-2xl font-bold mb-4">Datahub</h2>
+        
+        <Tabs 
+          defaultValue={activeTab} 
+          onValueChange={setActiveTab} 
+          className="w-full"
+        >
+          <TabsList className="mb-6">
+            <TabsTrigger value="lake">Data Lake</TabsTrigger>
+            <TabsTrigger value="warehouse">Data Warehouse</TabsTrigger>
+            <TabsTrigger value="catalog">Data Catalog</TabsTrigger>
+            <TabsTrigger value="lineage">Data Lineage</TabsTrigger>
           </TabsList>
           
-          <TabsContent value="hutchdb">
-            <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
-              <h3 className="text-xl font-semibold mb-4">HutchDB</h3>
-              <p className="text-gray-600 dark:text-gray-300 mb-6">
-                Browse and access internal data sources without requiring authentication.
+          <TabsContent value="lake" className="space-y-6">
+            <Card className="p-6">
+              <h3 className="text-xl font-semibold mb-4">Data Lake Overview</h3>
+              <p className="mb-4">
+                Your data lake stores raw data in its native format. Browse and manage your data lake contents here.
               </p>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                <Card className="p-4 hover:shadow-md cursor-pointer transition-shadow">
-                  <div className="flex items-center mb-2">
-                    <Database className="text-green-600 mr-2" size={18} />
-                    <h3 className="font-medium">Sales Data</h3>
-                  </div>
-                  <p className="text-sm text-gray-500">Production sales database</p>
-                </Card>
-                <Card className="p-4 hover:shadow-md cursor-pointer transition-shadow">
-                  <div className="flex items-center mb-2">
-                    <Database className="text-green-600 mr-2" size={18} />
-                    <h3 className="font-medium">Customer Data</h3>
-                  </div>
-                  <p className="text-sm text-gray-500">Customer relationship management</p>
-                </Card>
-                <Card className="p-4 hover:shadow-md cursor-pointer transition-shadow">
-                  <div className="flex items-center mb-2">
-                    <Database className="text-green-600 mr-2" size={18} />
-                    <h3 className="font-medium">Product Catalog</h3>
-                  </div>
-                  <p className="text-sm text-gray-500">Product information and inventory</p>
-                </Card>
-              </div>
-            </div>
-          </TabsContent>
-          
-          <TabsContent value="s3">
-            <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
-              <h3 className="text-xl font-semibold mb-4">AWS S3</h3>
-              <p className="text-gray-600 dark:text-gray-300 mb-6">
-                Connect to your AWS S3 buckets. Authentication required.
-              </p>
-              <Card className="p-6 border border-gray-300 dark:border-gray-600">
-                <h3 className="text-lg font-medium mb-4">AWS Authentication</h3>
-                <p className="mb-4">Please authenticate using your AWS IAM credentials with appropriate S3 permissions.</p>
-                <div className="flex gap-4">
-                  <button 
-                    className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors"
-                    onClick={handleAwsLogin}
-                  >
-                    Sign in with AWS IAM
-                  </button>
-                  <button className="px-4 py-2 border border-gray-300 rounded hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
-                    Use AWS SSO
-                  </button>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="bg-blue-50 dark:bg-blue-900 p-4 rounded-md">
+                  <h4 className="font-medium">Storage Usage</h4>
+                  <p className="text-2xl font-bold mt-2">1.24 TB</p>
+                  <p className="text-sm text-gray-500">of 5TB allocated</p>
                 </div>
-              </Card>
-            </div>
+                
+                <div className="bg-green-50 dark:bg-green-900 p-4 rounded-md">
+                  <h4 className="font-medium">Files</h4>
+                  <p className="text-2xl font-bold mt-2">24,651</p>
+                  <p className="text-sm text-gray-500">across all buckets</p>
+                </div>
+                
+                <div className="bg-purple-50 dark:bg-purple-900 p-4 rounded-md">
+                  <h4 className="font-medium">Last Updated</h4>
+                  <p className="text-2xl font-bold mt-2">2 hours ago</p>
+                  <p className="text-sm text-gray-500">by data pipeline</p>
+                </div>
+              </div>
+              
+              <div className="mt-6 flex justify-between">
+                <Button variant="outline">Browse Lake</Button>
+                <Button onClick={() => setActiveTab("upload")}>
+                  <Upload className="mr-2" size={16} />
+                  Upload to Lake
+                </Button>
+              </div>
+            </Card>
           </TabsContent>
           
-          <TabsContent value="azure">
-            <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
-              <h3 className="text-xl font-semibold mb-4">Azure Blob/ADLS</h3>
-              <p className="text-gray-600 dark:text-gray-300 mb-6">
-                Connect to your Azure Blob Storage or Azure Data Lake Storage. Authentication required.
+          <TabsContent value="warehouse" className="space-y-6">
+            <Card className="p-6">
+              <h3 className="text-xl font-semibold mb-4">Data Warehouse</h3>
+              <p className="mb-4">
+                Your data warehouse contains structured, processed data ready for analytics.
               </p>
-              <Card className="p-6 border border-gray-300 dark:border-gray-600">
-                <h3 className="text-lg font-medium mb-4">Azure Authentication</h3>
-                <p className="mb-4">Please authenticate using your Azure AD credentials with appropriate storage permissions.</p>
-                <button 
-                  className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors"
-                  onClick={handleAzureLogin}
-                >
-                  Sign in with Azure
-                </button>
-              </Card>
-            </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-md">
+                  <h4 className="font-medium">Schemas</h4>
+                  <p className="text-2xl font-bold mt-2">12</p>
+                  <p className="text-sm text-gray-500">production schemas</p>
+                </div>
+                
+                <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-md">
+                  <h4 className="font-medium">Tables</h4>
+                  <p className="text-2xl font-bold mt-2">342</p>
+                  <p className="text-sm text-gray-500">total tables</p>
+                </div>
+              </div>
+              
+              <Button>
+                <Server className="mr-2" size={16} />
+                Manage Warehouse
+              </Button>
+            </Card>
           </TabsContent>
           
-          <TabsContent value="gcp">
-            <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
-              <h3 className="text-xl font-semibold mb-4">Google Cloud Storage</h3>
-              <p className="text-gray-600 dark:text-gray-300 mb-6">
-                Connect to your Google Cloud Storage buckets. Authentication required.
+          <TabsContent value="catalog" className="space-y-6">
+            <Card className="p-6">
+              <h3 className="text-xl font-semibold mb-4">Data Catalog</h3>
+              <p className="mb-4">
+                Browse and search the data catalog to discover available datasets.
               </p>
-              <Card className="p-6 border border-gray-300 dark:border-gray-600">
-                <h3 className="text-lg font-medium mb-4">Google Cloud Authentication</h3>
-                <p className="mb-4">Please authenticate using your Google Cloud credentials with appropriate storage permissions.</p>
-                <button 
-                  className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors"
-                  onClick={handleGcpLogin}
-                >
-                  Sign in with Google Cloud
-                </button>
-              </Card>
-            </div>
+              
+              <div className="relative mb-6">
+                <input
+                  type="text"
+                  placeholder="Search the data catalog..."
+                  className="w-full p-2 pl-10 border border-gray-300 rounded"
+                />
+                <div className="absolute left-3 top-2.5">
+                  <svg className="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                  </svg>
+                </div>
+              </div>
+              
+              <h4 className="font-medium mb-2">Popular Datasets</h4>
+              <ul className="space-y-2 mb-6">
+                <li className="bg-gray-50 dark:bg-gray-800 p-3 rounded">sales_transactions</li>
+                <li className="bg-gray-50 dark:bg-gray-800 p-3 rounded">customer_profiles</li>
+                <li className="bg-gray-50 dark:bg-gray-800 p-3 rounded">product_inventory</li>
+                <li className="bg-gray-50 dark:bg-gray-800 p-3 rounded">marketing_campaigns</li>
+              </ul>
+              
+              <Button>Browse Full Catalog</Button>
+            </Card>
+          </TabsContent>
+          
+          <TabsContent value="lineage" className="space-y-6">
+            <Card className="p-6">
+              <h3 className="text-xl font-semibold mb-4">Data Lineage</h3>
+              <p className="mb-4">
+                Explore the origin and transformation journey of your data assets.
+              </p>
+              
+              <div className="h-64 bg-gray-100 dark:bg-gray-800 flex items-center justify-center rounded-md mb-6">
+                <p className="text-gray-500">Data lineage visualization will appear here</p>
+              </div>
+              
+              <Button>View Full Lineage Graph</Button>
+            </Card>
+          </TabsContent>
+          
+          <TabsContent value="upload" className="space-y-6">
+            {renderLakeUpload()}
           </TabsContent>
         </Tabs>
       </div>
     );
   };
 
-  return (
-    <div className="p-6">
-      {renderDatahubContent()}
-    </div>
-  );
+  // Render content based on the active page
+  if (activePage === 'datahub-upload') {
+    return renderLakeUpload();
+  } else {
+    return renderDatahubMain();
+  }
 };
 
 export default DatahubContent;

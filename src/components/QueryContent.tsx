@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { ArrowRight, Plus, Search, X } from "lucide-react";
+import { ArrowRight, Plus, Search, X, Code } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogClose } from "@/components/ui/dialog";
 import { useState } from "react";
 
@@ -93,11 +93,6 @@ const QueryContent: React.FC<QueryContentProps> = ({ activePage }) => {
                 </Card>
               ))}
             </div>
-            <p className="text-sm text-gray-500 mt-4 italic">
-              {/* Add backend integration here */}
-              {/* Queries will be populated from your existing backend function */}
-              {/* e.g. getCertifiedQueries().then(setQueries) */}
-            </p>
           </TabsContent>
           
           <TabsContent value="public" className="mt-6">
@@ -115,11 +110,6 @@ const QueryContent: React.FC<QueryContentProps> = ({ activePage }) => {
                 </Card>
               ))}
             </div>
-            <p className="text-sm text-gray-500 mt-4 italic">
-              {/* Add backend integration here */}
-              {/* Queries will be populated from your existing backend function */}
-              {/* e.g. getPublicQueries().then(setQueries) */}
-            </p>
           </TabsContent>
           
           <TabsContent value="private" className="mt-6">
@@ -137,11 +127,6 @@ const QueryContent: React.FC<QueryContentProps> = ({ activePage }) => {
                 </Card>
               ))}
             </div>
-            <p className="text-sm text-gray-500 mt-4 italic">
-              {/* Add backend integration here */}
-              {/* Queries will be populated from your existing backend function */}
-              {/* e.g. getPrivateQueries().then(setQueries) */}
-            </p>
           </TabsContent>
         </Tabs>
       </div>
@@ -232,9 +217,7 @@ const QueryContent: React.FC<QueryContentProps> = ({ activePage }) => {
           </div>
           
           <div className="flex justify-end mt-4">
-            <DialogClose asChild>
-              <Button variant="outline">Close</Button>
-            </DialogClose>
+            <Button variant="outline" onClick={() => setIsHistoryOpen(false)}>Close</Button>
           </div>
         </DialogContent>
       </Dialog>
@@ -245,11 +228,43 @@ const QueryContent: React.FC<QueryContentProps> = ({ activePage }) => {
     return (
       <div className="container mx-auto">
         <h2 className="text-2xl font-bold mb-6">Query</h2>
-        <p className="text-lg text-gray-600 mb-8">
-          Access and manage your SQL queries across the data lake.
-        </p>
         
-        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <Card className="p-6 hover:shadow-md transition-shadow cursor-pointer" onClick={handleRedirectToSqlEditor}>
+            <h3 className="text-xl font-semibold mb-3">SQL Editor</h3>
+            <p className="text-gray-600 dark:text-gray-300 mb-4">
+              Run SQL queries directly against your data sources.
+            </p>
+            <Button variant="outline" className="w-full hover:bg-green-500 hover:text-white transition-colors">
+              Open SQL Editor
+              <ArrowRight className="ml-2" size={16} />
+            </Button>
+          </Card>
+
+          <Card className="p-6 hover:shadow-md transition-shadow cursor-pointer" onClick={() => handlePageNavigation('query-saved-queries')}>
+            <h3 className="text-xl font-semibold mb-3">Saved Queries</h3>
+            <p className="text-gray-600 dark:text-gray-300 mb-4">
+              Access your library of saved SQL queries.
+            </p>
+            <Button variant="outline" className="w-full hover:bg-green-500 hover:text-white transition-colors">
+              View Saved Queries
+              <ArrowRight className="ml-2" size={16} />
+            </Button>
+          </Card>
+
+          <Card className="p-6 hover:shadow-md transition-shadow cursor-pointer" onClick={() => handlePageNavigation('query-history')}>
+            <h3 className="text-xl font-semibold mb-3">Query History</h3>
+            <p className="text-gray-600 dark:text-gray-300 mb-4">
+              Browse and reuse your recent queries.
+            </p>
+            <Button variant="outline" className="w-full hover:bg-green-500 hover:text-white transition-colors">
+              View History
+              <ArrowRight className="ml-2" size={16} />
+            </Button>
+          </Card>
+        </div>
+        
+        <Card className="p-6 bg-green-50 dark:bg-green-900">
           <h3 className="text-xl font-semibold mb-3">Query Features</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div>
@@ -274,42 +289,7 @@ const QueryContent: React.FC<QueryContentProps> = ({ activePage }) => {
               </p>
             </div>
           </div>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <Card className="p-6 hover:shadow-md transition-shadow cursor-pointer" onClick={handleRedirectToSqlEditor}>
-            <h3 className="text-xl font-semibold mb-3">SQL Editor</h3>
-            <p className="text-gray-600 dark:text-gray-300 mb-4">
-              Run SQL queries directly against your data sources.
-            </p>
-            <Button variant="outline" className="w-full">
-              Open SQL Editor
-              <ArrowRight className="ml-2" size={16} />
-            </Button>
-          </Card>
-
-          <Card className="p-6 hover:shadow-md transition-shadow cursor-pointer" onClick={() => handlePageNavigation('query-saved-queries')}>
-            <h3 className="text-xl font-semibold mb-3">Saved Queries</h3>
-            <p className="text-gray-600 dark:text-gray-300 mb-4">
-              Access your library of saved SQL queries.
-            </p>
-            <Button variant="outline" className="w-full">
-              View Saved Queries
-              <ArrowRight className="ml-2" size={16} />
-            </Button>
-          </Card>
-
-          <Card className="p-6 hover:shadow-md transition-shadow cursor-pointer" onClick={() => handlePageNavigation('query-history')}>
-            <h3 className="text-xl font-semibold mb-3">Query History</h3>
-            <p className="text-gray-600 dark:text-gray-300 mb-4">
-              Browse and reuse your recent queries.
-            </p>
-            <Button variant="outline" className="w-full">
-              View History
-              <ArrowRight className="ml-2" size={16} />
-            </Button>
-          </Card>
-        </div>
+        </Card>
       </div>
     );
   };

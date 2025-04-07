@@ -6,9 +6,9 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Index from "./pages/Index";
-import Dashboard from "./pages/Dashboard";
 import NotFound from "./pages/NotFound";
 import Header from "./components/Header";
+import SpacesContent from "./components/SpacesContent";
 
 const queryClient = new QueryClient();
 
@@ -38,7 +38,7 @@ const App = () => {
             <div className="flex-1 flex">
               <Routes>
                 <Route path="/" element={<Index />} />
-                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/spaces" element={<SpacesContent />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </div>

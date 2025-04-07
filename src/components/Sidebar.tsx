@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { ChevronDown, ChevronRight, Database, FileText, Home, Search, Settings, User, Layers, Server, Book, Clipboard, Bell, Key, Upload, CloudUpload, Menu, Plus, ArrowRight, PieChart, Hammer, Wrench } from 'lucide-react';
+import { ChevronDown, ChevronRight, Database, FileText, Home, Search, Settings, User, Layers, Server, Book, Clipboard, Bell, Key, Upload, CloudUpload, Menu, Plus, ArrowRight, PieChart, Hammer, Wrench, Code } from 'lucide-react';
 import { cn } from "@/lib/utils";
 
 interface SidebarProps {
@@ -121,7 +121,14 @@ const Sidebar: React.FC<SidebarProps> = ({
       id: 'bi-canvas',
       label: 'BI Canvas',
       icon: <PieChart size={18} />,
-      children: []
+      children: [
+        { id: 'bi-canvas-dashboard-1', label: 'Sales Dashboard' },
+        { id: 'bi-canvas-dashboard-2', label: 'Marketing KPIs' },
+        { id: 'bi-canvas-dashboard-3', label: 'Customer Analytics' },
+        { id: 'bi-canvas-dashboard-4', label: 'Financial Report' },
+        { id: 'bi-canvas-dashboard-5', label: 'Supply Chain Overview' },
+        { id: 'bi-canvas-dashboard-6', label: 'Human Resources KPIs' }
+      ]
     },
     {
       id: 'works',
@@ -129,13 +136,14 @@ const Sidebar: React.FC<SidebarProps> = ({
       icon: <Wrench size={18} />,
       children: [
         { id: 'works-workbooks', label: 'Workbooks' },
+        { id: 'works-spaces', label: 'Spaces' },
         { id: 'works-scheduler', label: 'Scheduled Jobs' }
       ]
     },
     {
       id: 'query',
       label: 'Query',
-      icon: <Search size={18} />,
+      icon: <Code size={18} />,
       children: []
     },
     {
@@ -169,11 +177,19 @@ const Sidebar: React.FC<SidebarProps> = ({
     
     if (activeSection !== sectionId) {
       setActiveSection(sectionId);
-      if (sectionId === 'home') {
-        setActivePage(null);
-      } else {
-        setActivePage(null);
+      
+      // Set default page for admin section
+      if (sectionId === 'admin') {
+        setActivePage('admin-users-roles');
+        return;
       }
+      
+      // For other sections, clear active page so the section's main content shows
+      setActivePage(null);
+    } else if (sectionId === activeSection && activePage) {
+      // If clicking on the same section that's already active and has a subpage,
+      // clear the subpage to show the main section content
+      setActivePage(null);
     }
   };
 
@@ -192,7 +208,12 @@ const Sidebar: React.FC<SidebarProps> = ({
       collapsed ? "w-16" : "w-64"
     )}>
       <div className="p-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
-        {!collapsed && <h1 className="text-xl font-bold text-gray-800 dark:text-gray-200"></h1>}
+        {!collapsed && (
+          <div className="flex items-center">
+            <h1 className="text-lg font-bold text-gray-800 dark:text-gray-200">Hutch</h1>
+            <span className="text-lg text-green-500 font-bold">...</span>
+          </div>
+        )}
         <button 
           onClick={toggleSidebar} 
           className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 focus:outline-none"
