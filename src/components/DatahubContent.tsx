@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card } from "@/components/ui/card";
@@ -618,7 +617,6 @@ const DatahubContent: React.FC<DatahubContentProps> = ({ activePage }) => {
     );
   };
 
-  // Create a component that renders content based on the active page
   const renderContent = () => {
     if (activePage === 'datahub-upload') {
       return renderLakeUpload();
@@ -637,8 +635,7 @@ const DatahubContent: React.FC<DatahubContentProps> = ({ activePage }) => {
     }
   };
 
-  // Determine if we should show the tree view (only for datahub section)
-  const shouldShowTreeView = activeSection === 'datahub';
+  const shouldShowTreeView = true;
 
   return (
     <div className="flex flex-1">
