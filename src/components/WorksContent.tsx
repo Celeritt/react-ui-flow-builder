@@ -1,318 +1,282 @@
 
 import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card } from "@/components/ui/card";
-import { ArrowRight, Plus, Hammer, Wrench } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { FileText, Calendar, Clock, Plus, ArrowRight, CheckCircle, XCircle } from "lucide-react";
 
 interface WorksContentProps {
   activePage: string | null;
 }
 
 const WorksContent: React.FC<WorksContentProps> = ({ activePage }) => {
-  const navigate = useNavigate();
+  if (activePage === 'works-workbooks') {
+    return <WorkbooksContent />;
+  } else if (activePage === 'works-spaces') {
+    return <SpacesRedirect />;
+  } else if (activePage === 'works-scheduler') {
+    return <SchedulerContent />;
+  }
 
-  const handleCreateWorkbook = () => {
-    // This would normally navigate to the create workbook page
-    alert("Creating new workbook (This will be replaced with actual functionality in production)");
-  };
+  return <WorksOverview />;
+};
 
-  const renderWorkbooks = () => {
-    return (
-      <div className="container mx-auto">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold">Workbooks</h2>
-          <Button onClick={handleCreateWorkbook}>
+const WorksOverview = () => {
+  return (
+    <div className="container mx-auto p-6">
+      <h2 className="text-2xl font-bold mb-6">Works</h2>
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <Card className="p-6 hover:shadow-md transition-shadow border-t-4 border-t-green-500">
+          <h3 className="text-xl font-semibold mb-4 flex items-center">
+            <FileText className="mr-2 h-5 w-5 text-green-500" />
+            Create Workbook
+          </h3>
+          <p className="text-gray-600 dark:text-gray-300 mb-6">
+            Create and manage analytical notebooks with code, visualizations, and markdown documentation.
+          </p>
+          <Button className="w-full md:w-auto">
             <Plus className="mr-2" size={16} />
             New Workbook
           </Button>
-        </div>
-
-        <Tabs defaultValue="recent">
-          <TabsList className="w-full md:w-auto">
-            <TabsTrigger value="recent">Recent Workbooks</TabsTrigger>
-            <TabsTrigger value="my">My Workbooks</TabsTrigger>
-            <TabsTrigger value="favorite">Favorite Workbooks</TabsTrigger>
-          </TabsList>
-          
-          <TabsContent value="recent" className="mt-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {[1, 2, 3].map((i) => (
-                <Card key={i} className="p-4 hover:shadow-md transition-shadow cursor-pointer">
-                  <div className="flex justify-between items-start mb-3">
-                    <div>
-                      <h3 className="font-medium">Recent Workbook {i}</h3>
-                      <p className="text-sm text-gray-500">Last edited 2 days ago</p>
-                    </div>
-                  </div>
-                  <p className="text-sm text-gray-600 mb-3">
-                    This workbook contains analysis on quarterly sales data for Q1 2025.
-                  </p>
-                  <div className="flex justify-between items-center text-xs text-gray-500">
-                    <span>4 collaborators</span>
-                    <span>12 visualizations</span>
-                  </div>
-                </Card>
-              ))}
-            </div>
-          </TabsContent>
-          
-          <TabsContent value="my" className="mt-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {[1, 2, 3, 4].map((i) => (
-                <Card key={i} className="p-4 hover:shadow-md transition-shadow cursor-pointer">
-                  <div className="flex justify-between items-start mb-3">
-                    <div>
-                      <h3 className="font-medium">My Workbook {i}</h3>
-                      <p className="text-sm text-gray-500">Created by you</p>
-                    </div>
-                  </div>
-                  <p className="text-sm text-gray-600 mb-3">
-                    Personal analysis on marketing campaign performance.
-                  </p>
-                  <div className="flex justify-between items-center text-xs text-gray-500">
-                    <span>Owner</span>
-                    <span>8 visualizations</span>
-                  </div>
-                </Card>
-              ))}
-            </div>
-          </TabsContent>
-          
-          <TabsContent value="favorite" className="mt-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {[1, 2].map((i) => (
-                <Card key={i} className="p-4 hover:shadow-md transition-shadow cursor-pointer">
-                  <div className="flex justify-between items-start mb-3">
-                    <div>
-                      <h3 className="font-medium">Favorite Workbook {i}</h3>
-                      <p className="text-sm text-gray-500">Created by Team Analytics</p>
-                    </div>
-                  </div>
-                  <p className="text-sm text-gray-600 mb-3">
-                    Company-wide KPI tracking and analytics dashboard.
-                  </p>
-                  <div className="flex justify-between items-center text-xs text-gray-500">
-                    <span>Shared</span>
-                    <span>15 visualizations</span>
-                  </div>
-                </Card>
-              ))}
-            </div>
-          </TabsContent>
-        </Tabs>
-      </div>
-    );
-  };
-
-  const renderScheduledJobs = () => {
-    return (
-      <div className="container mx-auto">
-        <h2 className="text-2xl font-bold mb-6">Scheduled Jobs</h2>
-        <Card className="p-6">
-          <div className="mb-6">
-            <h3 className="text-xl font-medium mb-4">Active Jobs</h3>
-            <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50 dark:bg-gray-800">
-                  <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Job Name</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Schedule</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Last Run</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700">
-                  <tr>
-                    <td className="px-6 py-4 whitespace-nowrap">Daily Sales Report</td>
-                    <td className="px-6 py-4 whitespace-nowrap">Daily at 7:00 AM</td>
-                    <td className="px-6 py-4 whitespace-nowrap">April 6, 2025 7:00 AM</td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Completed</span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm">
-                      <Button variant="outline" size="sm" className="mr-2">Run Now</Button>
-                      <Button variant="outline" size="sm">Edit</Button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="px-6 py-4 whitespace-nowrap">Weekly Inventory Update</td>
-                    <td className="px-6 py-4 whitespace-nowrap">Every Monday at 1:00 AM</td>
-                    <td className="px-6 py-4 whitespace-nowrap">April 1, 2025 1:00 AM</td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Completed</span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm">
-                      <Button variant="outline" size="sm" className="mr-2">Run Now</Button>
-                      <Button variant="outline" size="sm">Edit</Button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="px-6 py-4 whitespace-nowrap">Customer Data Sync</td>
-                    <td className="px-6 py-4 whitespace-nowrap">Hourly</td>
-                    <td className="px-6 py-4 whitespace-nowrap">April 6, 2025 10:00 AM</td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">Running</span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm">
-                      <Button variant="outline" size="sm">Stop</Button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
         </Card>
-      </div>
-    );
-  };
-
-  const renderSpaces = () => {
-    return (
-      <div className="container mx-auto">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold">Spaces</h2>
-          <Button>
+        
+        <Card className="p-6 hover:shadow-md transition-shadow border-t-4 border-t-green-500">
+          <h3 className="text-xl font-semibold mb-4 flex items-center">
+            <FileText className="mr-2 h-5 w-5 text-green-500" />
+            Create a Space
+          </h3>
+          <p className="text-gray-600 dark:text-gray-300 mb-6">
+            Collaborative environments for teams to organize related dashboards, queries, and workbooks.
+          </p>
+          <Button className="w-full md:w-auto">
             <Plus className="mr-2" size={16} />
             New Space
           </Button>
-        </div>
-        
-        <Tabs defaultValue="my-spaces">
-          <TabsList className="w-full md:w-auto">
-            <TabsTrigger value="my-spaces">My Spaces</TabsTrigger>
-            <TabsTrigger value="public-spaces">Public Spaces</TabsTrigger>
-          </TabsList>
-          
-          <TabsContent value="my-spaces" className="mt-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {[1, 2, 3].map((i) => (
-                <Card key={i} className="p-6 hover:shadow-md transition-shadow cursor-pointer">
-                  <div className="flex justify-between mb-4">
-                    <h3 className="text-lg font-medium">Marketing Analytics</h3>
-                    <div className="p-2 bg-blue-100 text-blue-600 rounded-full">
-                      {i % 2 === 0 ? <Wrench size={16} /> : <Hammer size={16} />}
-                    </div>
-                  </div>
-                  <p className="text-sm text-gray-600 mb-6">
-                    Collaborative space for marketing team.
-                  </p>
-                  <div className="flex justify-between items-center">
-                    <div className="flex -space-x-2">
-                      <div className="w-8 h-8 rounded-full bg-blue-500 border-2 border-white"></div>
-                      <div className="w-8 h-8 rounded-full bg-green-500 border-2 border-white"></div>
-                      <div className="w-8 h-8 rounded-full bg-yellow-500 border-2 border-white flex items-center justify-center text-xs text-white">+3</div>
-                    </div>
-                    <span className="text-xs text-gray-500">Updated 2 days ago</span>
-                  </div>
-                  
-                  <div className="mt-4 pt-4 border-t border-gray-200">
-                    <div className="flex justify-between text-xs text-gray-500">
-                      <span>6 workbooks</span>
-                      <span>12 dashboards</span>
-                      <span>18 visualizations</span>
-                    </div>
-                  </div>
-                </Card>
-              ))}
-            </div>
-          </TabsContent>
-          
-          <TabsContent value="public-spaces" className="mt-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {[1, 2, 3, 4, 5, 6].map((i) => (
-                <Card key={i} className="p-6 hover:shadow-md transition-shadow cursor-pointer">
-                  <div className="flex justify-between mb-4">
-                    <h3 className="text-lg font-medium">Corporate KPIs</h3>
-                    <div className="p-2 bg-green-100 text-green-600 rounded-full">
-                      <Wrench size={16} />
-                    </div>
-                  </div>
-                  <p className="text-sm text-gray-600 mb-6">
-                    Company-wide space for tracking key performance indicators.
-                  </p>
-                  <div className="flex justify-between items-center">
-                    <div className="flex -space-x-2">
-                      <div className="w-8 h-8 rounded-full bg-purple-500 border-2 border-white"></div>
-                      <div className="w-8 h-8 rounded-full bg-red-500 border-2 border-white"></div>
-                      <div className="w-8 h-8 rounded-full bg-indigo-500 border-2 border-white flex items-center justify-center text-xs text-white">+8</div>
-                    </div>
-                    <span className="text-xs text-gray-500">Updated daily</span>
-                  </div>
-                  
-                  <div className="mt-4 pt-4 border-t border-gray-200">
-                    <div className="flex justify-between text-xs text-gray-500">
-                      <span>15 workbooks</span>
-                      <span>8 dashboards</span>
-                      <span>42 visualizations</span>
-                    </div>
-                  </div>
-                </Card>
-              ))}
-            </div>
-          </TabsContent>
-        </Tabs>
+        </Card>
       </div>
-    );
-  };
-
-  const renderWorksOverview = () => {
-    return (
-      <div className="container mx-auto">
-        <h2 className="text-3xl font-bold mb-6">Welcome to Works</h2>
+      
+      <div className="mb-8">
+        <h3 className="text-xl font-semibold mb-4">Recent Activity</h3>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
-            <h3 className="text-xl font-semibold mb-3">Create Workbook</h3>
-            <p className="text-gray-600 dark:text-gray-300 mb-4">
-              Start building your data analytics workbook.
-            </p>
-            <div className="flex justify-center my-6">
-              <div className="h-40 w-full max-w-xs bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center">
-                <Hammer size={64} className="text-blue-500 dark:text-blue-300" />
+        <div className="space-y-4">
+          <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-md flex items-center justify-between">
+            <div className="flex items-center">
+              <FileText className="h-5 w-5 text-green-500 mr-3" />
+              <div>
+                <h4 className="font-medium">Sales Analysis Workbook</h4>
+                <p className="text-sm text-gray-500">Updated 2 hours ago</p>
               </div>
             </div>
-            <Button 
-              className="w-full bg-white text-green-600 border-green-600 hover:bg-green-600 hover:text-white"
-              onClick={handleCreateWorkbook}
-            >
-              Create New Workbook <ArrowRight className="ml-2" size={16} />
+            <Button variant="ghost" size="sm" className="text-green-600">
+              Open <ArrowRight className="ml-1" size={16} />
             </Button>
           </div>
-
-          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
-            <h3 className="text-xl font-semibold mb-3">Create a Space</h3>
-            <p className="text-gray-600 dark:text-gray-300 mb-4">
-              Set up a collaborative environment for your team.
-            </p>
-            <div className="flex justify-center my-6">
-              <div className="h-40 w-full max-w-xs bg-gradient-to-r from-purple-100 to-pink-100 dark:from-purple-900 dark:to-pink-900 rounded-lg flex items-center justify-center">
-                <Wrench size={64} className="text-purple-500 dark:text-purple-300" />
+          
+          <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-md flex items-center justify-between">
+            <div className="flex items-center">
+              <Calendar className="h-5 w-5 text-blue-500 mr-3" />
+              <div>
+                <h4 className="font-medium">Daily Data Refresh</h4>
+                <p className="text-sm text-gray-500">Completed 6 hours ago</p>
               </div>
             </div>
-            <Button 
-              className="w-full bg-white text-green-600 border-green-600 hover:bg-green-600 hover:text-white"
-              onClick={() => navigate('/works/spaces')}
-            >
-              Create New Space <ArrowRight className="ml-2" size={16} />
+            <Button variant="ghost" size="sm" className="text-blue-600">
+              View Log <ArrowRight className="ml-1" size={16} />
+            </Button>
+          </div>
+          
+          <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-md flex items-center justify-between">
+            <div className="flex items-center">
+              <FileText className="h-5 w-5 text-purple-500 mr-3" />
+              <div>
+                <h4 className="font-medium">Customer Analysis</h4>
+                <p className="text-sm text-gray-500">Created yesterday</p>
+              </div>
+            </div>
+            <Button variant="ghost" size="sm" className="text-purple-600">
+              Open <ArrowRight className="ml-1" size={16} />
             </Button>
           </div>
         </div>
       </div>
-    );
-  };
+    </div>
+  );
+};
 
-  // Render content based on the active page
-  if (activePage === 'works-workbooks') {
-    return renderWorkbooks();
-  } else if (activePage === 'works-scheduler') {
-    return renderScheduledJobs();
-  } else if (activePage === 'works-spaces') {
-    return renderSpaces();
-  } else {
-    return renderWorksOverview();
-  }
+const WorkbooksContent = () => {
+  return (
+    <div className="container mx-auto p-6">
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-2xl font-bold">Workbooks</h2>
+        <Button>
+          <Plus className="mr-2" size={16} />
+          Create Workbook
+        </Button>
+      </div>
+      
+      <p className="text-gray-600 dark:text-gray-300 mb-6">
+        Workbooks combine code, data, and visualizations in an interactive notebook format.
+        Create powerful analytical documents with support for SQL, Python, and R.
+      </p>
+      
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <Card className="p-6 hover:shadow-md transition-shadow cursor-pointer">
+          <div className="flex justify-between items-start mb-3">
+            <div className="bg-green-100 dark:bg-green-900 p-2 rounded">
+              <FileText className="h-8 w-8 text-green-600 dark:text-green-400" />
+            </div>
+            <div className="flex items-center text-xs text-gray-500">
+              <Clock size={14} className="mr-1" />
+              Updated 2h ago
+            </div>
+          </div>
+          <h3 className="text-lg font-semibold mb-2">Sales Analysis</h3>
+          <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+            Deep dive into regional sales performance with trend analysis.
+          </p>
+          <Button variant="ghost" size="sm" className="text-green-600 hover:text-green-700">
+            Open Workbook <ArrowRight size={14} className="ml-1" />
+          </Button>
+        </Card>
+        
+        <Card className="p-6 hover:shadow-md transition-shadow cursor-pointer">
+          <div className="flex justify-between items-start mb-3">
+            <div className="bg-blue-100 dark:bg-blue-900 p-2 rounded">
+              <FileText className="h-8 w-8 text-blue-600 dark:text-blue-400" />
+            </div>
+            <div className="flex items-center text-xs text-gray-500">
+              <Clock size={14} className="mr-1" />
+              Updated yesterday
+            </div>
+          </div>
+          <h3 className="text-lg font-semibold mb-2">Customer Segmentation</h3>
+          <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+            Customer clustering and behavioral analysis using ML techniques.
+          </p>
+          <Button variant="ghost" size="sm" className="text-blue-600 hover:text-blue-700">
+            Open Workbook <ArrowRight size={14} className="ml-1" />
+          </Button>
+        </Card>
+        
+        <Card className="p-6 hover:shadow-md transition-shadow cursor-pointer">
+          <div className="flex justify-between items-start mb-3">
+            <div className="bg-purple-100 dark:bg-purple-900 p-2 rounded">
+              <FileText className="h-8 w-8 text-purple-600 dark:text-purple-400" />
+            </div>
+            <div className="flex items-center text-xs text-gray-500">
+              <Clock size={14} className="mr-1" />
+              Updated 3d ago
+            </div>
+          </div>
+          <h3 className="text-lg font-semibold mb-2">Product Metrics</h3>
+          <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+            Product performance analytics and growth opportunities.
+          </p>
+          <Button variant="ghost" size="sm" className="text-purple-600 hover:text-purple-700">
+            Open Workbook <ArrowRight size={14} className="ml-1" />
+          </Button>
+        </Card>
+      </div>
+    </div>
+  );
+};
+
+const SpacesRedirect = () => {
+  return (
+    <div className="container mx-auto p-6 text-center">
+      <h2 className="text-2xl font-bold mb-6">Spaces</h2>
+      <div className="max-w-md mx-auto">
+        <p className="text-gray-600 dark:text-gray-400 mb-6">
+          Spaces are collaborative environments where teams can work together on data projects, 
+          share insights, and organize related dashboards and queries.
+        </p>
+        <Button asChild>
+          <a href="#/spaces">Go to Spaces</a>
+        </Button>
+      </div>
+    </div>
+  );
+};
+
+const SchedulerContent = () => {
+  return (
+    <div className="container mx-auto p-6">
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-2xl font-bold">Scheduled Jobs</h2>
+      </div>
+      
+      <p className="text-gray-600 dark:text-gray-300 mb-6">
+        Manage and monitor data jobs that run on a regular schedule.
+      </p>
+      
+      <Tabs defaultValue="active" className="w-full">
+        <TabsList className="mb-6">
+          <TabsTrigger value="active">Active Jobs</TabsTrigger>
+          <TabsTrigger value="history">Job History</TabsTrigger>
+        </TabsList>
+        
+        <TabsContent value="active" className="space-y-4">
+          {[...Array(5)].map((_, i) => (
+            <Card key={i} className="p-4">
+              <div className="flex justify-between items-center">
+                <div>
+                  <h3 className="font-semibold">Daily Data Refresh {i+1}</h3>
+                  <div className="flex items-center text-sm text-gray-500">
+                    <Calendar size={14} className="mr-1" />
+                    <span>Daily at {((i + 1) * 2) % 24}:00</span>
+                  </div>
+                </div>
+                <div className="flex items-center">
+                  {i % 3 !== 0 ? (
+                    <span className="flex items-center text-green-600">
+                      <CheckCircle size={16} className="mr-1" /> Running
+                    </span>
+                  ) : (
+                    <span className="flex items-center text-yellow-600">
+                      <Clock size={16} className="mr-1" /> Scheduled
+                    </span>
+                  )}
+                  <Button variant="ghost" size="sm" className="ml-4">
+                    View Details
+                  </Button>
+                </div>
+              </div>
+            </Card>
+          ))}
+        </TabsContent>
+        
+        <TabsContent value="history" className="space-y-4">
+          {[...Array(7)].map((_, i) => (
+            <Card key={i} className="p-4">
+              <div className="flex justify-between items-center">
+                <div>
+                  <h3 className="font-semibold">Weekly Aggregation {i+1}</h3>
+                  <div className="flex items-center text-sm text-gray-500">
+                    <Clock size={14} className="mr-1" />
+                    <span>Ran {i+1} day{i !== 0 ? 's' : ''} ago</span>
+                  </div>
+                </div>
+                <div className="flex items-center">
+                  {i % 4 !== 0 ? (
+                    <span className="flex items-center text-green-600">
+                      <CheckCircle size={16} className="mr-1" /> Success
+                    </span>
+                  ) : (
+                    <span className="flex items-center text-red-600">
+                      <XCircle size={16} className="mr-1" /> Failed
+                    </span>
+                  )}
+                  <Button variant="ghost" size="sm" className="ml-4">
+                    View Log
+                  </Button>
+                </div>
+              </div>
+            </Card>
+          ))}
+        </TabsContent>
+      </Tabs>
+    </div>
+  );
 };
 
 export default WorksContent;

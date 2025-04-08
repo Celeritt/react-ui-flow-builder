@@ -1,8 +1,13 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Sidebar from '../components/Sidebar';
 import ContentArea from '../components/ContentArea';
 import HomePage from '../components/HomePage';
+import DatahubContent from '../components/DatahubContent';
+import WorksContent from '../components/WorksContent';
+import SpacesContent from '../components/SpacesContent';
+import QueryContent from '../components/QueryContent';
+import BiCanvasContent from '../components/BiCanvasContent';
 
 const Index = () => {
   const [activeSection, setActiveSection] = useState<string | null>('home');
@@ -22,7 +27,35 @@ const Index = () => {
             <HomePage />
           )}
           
-          {activeSection && activeSection !== 'home' && (
+          {activeSection === 'datahub' && (
+            <DatahubContent 
+              activePage={activePage} 
+            />
+          )}
+          
+          {activeSection === 'works' && (
+            <WorksContent 
+              activePage={activePage} 
+            />
+          )}
+          
+          {activeSection === 'spaces' && (
+            <SpacesContent />
+          )}
+          
+          {activeSection === 'query' && (
+            <QueryContent 
+              activePage={activePage} 
+            />
+          )}
+          
+          {activeSection === 'bi-canvas' && (
+            <BiCanvasContent 
+              activePage={activePage} 
+            />
+          )}
+          
+          {activeSection && !['home', 'datahub', 'works', 'query', 'bi-canvas', 'spaces'].includes(activeSection) && (
             <ContentArea 
               activeSection={activeSection} 
               activePage={activePage} 

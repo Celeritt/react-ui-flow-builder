@@ -25,10 +25,6 @@ const Header = () => {
   
   return (
     <div className="h-14 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between px-4">
-      <div className="flex items-center">
-        {/* Removed "Data Platform" text */}
-      </div>
-      
       <div className="flex items-center gap-4">
         <div className="flex items-center">
           <span className="text-sm text-gray-500 dark:text-gray-400 mr-2">Select Lakehouse:</span>
@@ -43,7 +39,9 @@ const Header = () => {
             </SelectContent>
           </Select>
         </div>
-        
+      </div>
+      
+      <div className="flex items-center gap-4">
         <form onSubmit={handleSearch} className="flex items-center relative w-64">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
             <Search size={16} className="text-gray-400" />

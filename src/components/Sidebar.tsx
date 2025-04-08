@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { ChevronDown, ChevronRight, Database, FileText, Home, Search, Settings, User, Layers, Server, Book, Clipboard, Bell, Key, Upload, CloudUpload, Menu, Plus, ArrowRight, PieChart, Hammer, Wrench, Code } from 'lucide-react';
 import { cn } from "@/lib/utils";
@@ -114,21 +113,18 @@ const Sidebar: React.FC<SidebarProps> = ({
       label: 'Datahub',
       icon: <Database size={18} />,
       children: [
-        { id: 'datahub-upload', label: 'Upload to Lake', icon: <Upload size={16} /> }
+        { id: 'datahub-enterprise-data-viewer', label: 'Enterprise Data Viewer' },
+        { id: 'datahub-data-mart', label: 'Data Mart (Golden Layer)' },
+        { id: 'datahub-data-lineage', label: 'Data Lineage' },
+        { id: 'datahub-hutchml', label: 'HutchML' },
+        { id: 'datahub-connected-sources', label: 'Connected Data Sources' }
       ]
     },
     {
       id: 'bi-canvas',
       label: 'BI Canvas',
       icon: <PieChart size={18} />,
-      children: [
-        { id: 'bi-canvas-dashboard-1', label: 'Sales Dashboard' },
-        { id: 'bi-canvas-dashboard-2', label: 'Marketing KPIs' },
-        { id: 'bi-canvas-dashboard-3', label: 'Customer Analytics' },
-        { id: 'bi-canvas-dashboard-4', label: 'Financial Report' },
-        { id: 'bi-canvas-dashboard-5', label: 'Supply Chain Overview' },
-        { id: 'bi-canvas-dashboard-6', label: 'Human Resources KPIs' }
-      ]
+      children: []
     },
     {
       id: 'works',
@@ -186,6 +182,13 @@ const Sidebar: React.FC<SidebarProps> = ({
       
       // For other sections, clear active page so the section's main content shows
       setActivePage(null);
+    } else if (!expandedSections[sectionId]) {
+      // If clicking on the same section that's already active but collapsed,
+      // expand it but keep the active page
+      setExpandedSections(prev => ({ 
+        ...prev, 
+        [sectionId]: true
+      }));
     } else if (sectionId === activeSection && activePage) {
       // If clicking on the same section that's already active and has a subpage,
       // clear the subpage to show the main section content
