@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card } from "@/components/ui/card";
@@ -5,6 +6,8 @@ import { Upload, ArrowUpDown, FileUp, Database, Server, Search, Folder, FileText
 import { useState, useEffect } from "react";
 import TreeView from "./TreeView";
 import { cn } from "@/lib/utils";
+import DataOrganogram from "./DataOrganogram";
+import WorldMapViewer from "./WorldMapViewer";
 
 interface DatahubContentProps {
   activePage: string | null;
@@ -221,6 +224,9 @@ const DatahubContent: React.FC<DatahubContentProps> = ({ activePage }) => {
                   </div>
                 </div>
               </div>
+
+              <h3 className="text-lg font-semibold mt-8 mb-4">Data Organogram</h3>
+              <DataOrganogram jsonPath="/data-organogram.json" />
             </Card>
           </TabsContent>
           
@@ -234,60 +240,8 @@ const DatahubContent: React.FC<DatahubContentProps> = ({ activePage }) => {
                   </Button>
                 </div>
               </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                <Card className="p-4 hover:shadow-md transition-shadow cursor-pointer">
-                  <Database className="h-8 w-8 text-blue-500 mb-2" />
-                  <h4 className="font-medium">Region: South Africa</h4>
-                  <p className="text-sm text-gray-500">On-Prem & GCP</p>
-                </Card>
-                
-                <Card className="p-4 hover:shadow-md transition-shadow cursor-pointer">
-                  <Database className="h-8 w-8 text-red-500 mb-2" />
-                  <h4 className="font-medium">Region: USA</h4>
-                  <p className="text-sm text-gray-500">AWS</p>
-                </Card>
-                
-                <Card className="p-4 hover:shadow-md transition-shadow cursor-pointer">
-                  <Database className="h-8 w-8 text-green-500 mb-2" />
-                  <h4 className="font-medium">Region: Germany</h4>
-                  <p className="text-sm text-gray-500">GCP</p>
-                </Card>
-              </div>
-              
-              <div className="border rounded-md p-4">
-                <h4 className="font-medium mb-3">Region: South Africa</h4>
-                
-                <div className="ml-4 space-y-3">
-                  <div>
-                    <h5 className="font-medium mb-2">On-Prem</h5>
-                    <div className="ml-4 space-y-1">
-                      <div className="flex items-center p-1 hover:bg-gray-100 dark:hover:bg-gray-800 rounded">
-                        <Server className="h-4 w-4 text-gray-500 mr-2" />
-                        <span>Databases</span>
-                      </div>
-                      <div className="flex items-center p-1 hover:bg-gray-100 dark:hover:bg-gray-800 rounded">
-                        <FileText className="h-4 w-4 text-gray-500 mr-2" />
-                        <span>Tables</span>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div>
-                    <h5 className="font-medium mb-2">Google Cloud (SA)</h5>
-                    <div className="ml-4 space-y-1">
-                      <div className="flex items-center p-1 hover:bg-gray-100 dark:hover:bg-gray-800 rounded">
-                        <Folder className="h-4 w-4 text-gray-500 mr-2" />
-                        <span>Buckets</span>
-                      </div>
-                      <div className="flex items-center p-1 hover:bg-gray-100 dark:hover:bg-gray-800 rounded">
-                        <FileText className="h-4 w-4 text-gray-500 mr-2" />
-                        <span>Objects</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+
+              <WorldMapViewer />
             </Card>
           </TabsContent>
         </Tabs>
@@ -635,7 +589,7 @@ const DatahubContent: React.FC<DatahubContentProps> = ({ activePage }) => {
     }
   };
 
-  const shouldShowTreeView = true;
+  const shouldShowTreeView = activePage?.startsWith('datahub-') || activePage === null;
 
   return (
     <div className="flex flex-1">
