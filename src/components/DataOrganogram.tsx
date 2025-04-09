@@ -32,16 +32,19 @@ const DataOrganogram: React.FC<DataOrganogramProps> = ({ initialData, jsonPath }
       // Load data from JSON file
       fetch(jsonPath)
         .then(response => response.json())
-        .then(data => {
-          setData(data);
-          setCurrentView(data);
+        .then((fetchedData: OrganogramNode[]) => {
+          // Validate and sanitize the loaded data
+          const validatedData = validateOrganogramData(fetchedData);
+          setData(validatedData);
+          setCurrentView(validatedData);
         })
         .catch(error => console.error("Error loading organogram data:", error));
     } else if (initialData) {
-      setCurrentView(initialData);
+      const validatedData = validateOrganogramData(initialData);
+      setCurrentView(validatedData);
     } else {
-      // Default data structure if no data is provided
-      const defaultData = [
+      // Default data with explicit type annotations to match the OrganogramNode type
+      const defaultData: OrganogramNode[] = [
         {
           id: "hutchlake",
           name: "HutchLake",
@@ -140,6 +143,38 @@ const DataOrganogram: React.FC<DataOrganogramProps> = ({ initialData, jsonPath }
     }
   }, [jsonPath, initialData]);
 
+  // Function to validate and fix the type property in the organogram data
+  const validateOrganogramData = (data: any[]): OrganogramNode[] => {
+    // Helper function to validate a single node
+    const validateNode = (node: any): OrganogramNode => {
+      // Ensure the type is one of the allowed values or default to 'folder'
+      let validatedType: OrganogramNode['type'] = 'folder';
+      
+      if (['database', 'bucket', 'folder', 'file', 'schema', 'region'].includes(node.type)) {
+        validatedType = node.type as OrganogramNode['type'];
+      } else if (node.type === 'table') {
+        validatedType = 'database'; // Map similar types to allowed ones
+      }
+      
+      // Create a validated node
+      const validatedNode: OrganogramNode = {
+        id: node.id || `node-${Math.random().toString(36).substring(2, 9)}`,
+        name: node.name || 'Unnamed',
+        type: validatedType
+      };
+      
+      // Recursively validate children if they exist
+      if (node.children && Array.isArray(node.children) && node.children.length > 0) {
+        validatedNode.children = node.children.map(child => validateNode(child));
+      }
+      
+      return validatedNode;
+    };
+    
+    // Validate the entire data array
+    return Array.isArray(data) ? data.map(node => validateNode(node)) : [];
+  };
+
   const handleNodeClick = (node: OrganogramNode) => {
     if (node.children && node.children.length > 0) {
       setCurrentPath([...currentPath, node]);
@@ -178,8 +213,12 @@ const DataOrganogram: React.FC<DataOrganogramProps> = ({ initialData, jsonPath }
       reader.onload = (e) => {
         try {
           const jsonData = JSON.parse(e.target?.result as string);
-          setData(jsonData);
-          setCurrentView(jsonData);
+          
+          // Validate and sanitize the data
+          const validatedData = validateOrganogramData(jsonData);
+          
+          setData(validatedData);
+          setCurrentView(validatedData);
           setCurrentPath([]);
         } catch (error) {
           console.error("Error parsing JSON file:", error);
