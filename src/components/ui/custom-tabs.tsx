@@ -34,6 +34,7 @@ export const CustomTabs: React.FC<TabsProps> = ({
       {React.Children.map(children, (child) => {
         if (!React.isValidElement(child)) return child;
         
+        // Pass the current value and change handler to each child
         return React.cloneElement(child as React.ReactElement<any>, {
           value,
           onValueChange: handleValueChange,
@@ -61,6 +62,7 @@ export const CustomTabsList: React.FC<TabsListProps> = ({
         "inline-flex h-10 items-center justify-center rounded-md bg-muted p-1 text-muted-foreground",
         className
       )}
+      role="tablist"
       {...props}
     >
       {children}
