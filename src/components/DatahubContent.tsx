@@ -196,7 +196,7 @@ const DatahubContent: React.FC<DatahubContentProps> = ({ activePage }) => {
                 </Card>
               </div>
               
-              <div className="border rounded-md p-4">
+              <div className="border rounded-md p-4 mb-6">
                 <div className="flex items-center justify-between mb-2">
                   <h4 className="font-medium">Bronze Zone / raw_sales_data / 2024-04</h4>
                   <div>
