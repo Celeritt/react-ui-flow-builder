@@ -1,7 +1,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { Card } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { CustomTabs, CustomTabsList, CustomTabsTrigger, CustomTabsContent } from "@/components/ui/custom-tabs";
 import { FileText, Layout, LineChart, ArrowRight, PlusCircle, BarChart2, FolderTree } from 'lucide-react';
 
 const HomePage = () => {
@@ -155,16 +155,16 @@ const HomePage = () => {
       
       {/* Recent/Favorite Works Section */}
       <div className="mb-8">
-        <Tabs defaultValue="recent" className="w-full">
+        <CustomTabs defaultValue="recent" className="w-full">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-2xl font-bold text-gray-800 dark:text-white">Pick up where you left</h2>
-            <TabsList>
-              <TabsTrigger value="recent">Recent Works</TabsTrigger>
-              <TabsTrigger value="favorites">Favorites</TabsTrigger>
-            </TabsList>
+            <CustomTabsList>
+              <CustomTabsTrigger value="recent">Recent Works</CustomTabsTrigger>
+              <CustomTabsTrigger value="favorites">Favorites</CustomTabsTrigger>
+            </CustomTabsList>
           </div>
           
-          <TabsContent value="recent">
+          <CustomTabsContent value="recent">
             <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
               <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                 <thead className="bg-gray-50 dark:bg-gray-700">
@@ -206,9 +206,9 @@ const HomePage = () => {
                 </tbody>
               </table>
             </div>
-          </TabsContent>
+          </CustomTabsContent>
           
-          <TabsContent value="favorites">
+          <CustomTabsContent value="favorites">
             <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
               <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                 <thead className="bg-gray-50 dark:bg-gray-700">
@@ -250,8 +250,8 @@ const HomePage = () => {
                 </tbody>
               </table>
             </div>
-          </TabsContent>
-        </Tabs>
+          </CustomTabsContent>
+        </CustomTabs>
       </div>
     </div>
   );

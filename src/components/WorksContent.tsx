@@ -1,7 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { CustomTabs, CustomTabsList, CustomTabsTrigger, CustomTabsContent } from "@/components/ui/custom-tabs";
 import { FileText, Calendar, Clock, Plus, ArrowRight, CheckCircle, XCircle } from "lucide-react";
 
 interface WorksContentProps {
@@ -209,13 +209,13 @@ const SchedulerContent = () => {
         Manage and monitor data jobs that run on a regular schedule.
       </p>
       
-      <Tabs defaultValue="active" className="w-full">
-        <TabsList className="mb-6">
-          <TabsTrigger value="active">Active Jobs</TabsTrigger>
-          <TabsTrigger value="history">Job History</TabsTrigger>
-        </TabsList>
+      <CustomTabs defaultValue="active" className="w-full">
+        <CustomTabsList className="mb-6">
+          <CustomTabsTrigger value="active">Active Jobs</CustomTabsTrigger>
+          <CustomTabsTrigger value="history">Job History</CustomTabsTrigger>
+        </CustomTabsList>
         
-        <TabsContent value="active" className="space-y-4">
+        <CustomTabsContent value="active" className="space-y-4">
           {[...Array(5)].map((_, i) => (
             <Card key={i} className="p-4">
               <div className="flex justify-between items-center">
@@ -243,9 +243,9 @@ const SchedulerContent = () => {
               </div>
             </Card>
           ))}
-        </TabsContent>
+        </CustomTabsContent>
         
-        <TabsContent value="history" className="space-y-4">
+        <CustomTabsContent value="history" className="space-y-4">
           {[...Array(7)].map((_, i) => (
             <Card key={i} className="p-4">
               <div className="flex justify-between items-center">
@@ -273,8 +273,8 @@ const SchedulerContent = () => {
               </div>
             </Card>
           ))}
-        </TabsContent>
-      </Tabs>
+        </CustomTabsContent>
+      </CustomTabs>
     </div>
   );
 };

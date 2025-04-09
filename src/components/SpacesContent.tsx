@@ -1,6 +1,6 @@
 
 import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { CustomTabs, CustomTabsList, CustomTabsTrigger, CustomTabsContent } from "@/components/ui/custom-tabs";
 import { Card } from "@/components/ui/card";
 import { Calendar, FileText, Users, BarChart3, Globe } from "lucide-react";
 
@@ -9,13 +9,13 @@ const SpacesContent = () => {
     <div className="container mx-auto">
       <h2 className="text-2xl font-bold mb-4">Spaces</h2>
       
-      <Tabs defaultValue="my-spaces" className="w-full">
-        <TabsList>
-          <TabsTrigger value="my-spaces">My Spaces</TabsTrigger>
-          <TabsTrigger value="public-spaces">Public Spaces</TabsTrigger>
-        </TabsList>
+      <CustomTabs defaultValue="my-spaces" className="w-full">
+        <CustomTabsList>
+          <CustomTabsTrigger value="my-spaces">My Spaces</CustomTabsTrigger>
+          <CustomTabsTrigger value="public-spaces">Public Spaces</CustomTabsTrigger>
+        </CustomTabsList>
         
-        <TabsContent value="my-spaces" className="space-y-6">
+        <CustomTabsContent value="my-spaces" className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <Card className="p-5 hover:shadow-md transition-shadow cursor-pointer">
               <div className="flex justify-between items-start mb-3">
@@ -92,9 +92,9 @@ const SpacesContent = () => {
               Create New Space
             </Button>
           </div>
-        </TabsContent>
+        </CustomTabsContent>
         
-        <TabsContent value="public-spaces" className="space-y-6">
+        <CustomTabsContent value="public-spaces" className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <Card className="p-5 hover:shadow-md transition-shadow cursor-pointer">
               <div className="flex justify-between items-start mb-3">
@@ -165,8 +165,8 @@ const SpacesContent = () => {
               </div>
             </Card>
           </div>
-        </TabsContent>
-      </Tabs>
+        </CustomTabsContent>
+      </CustomTabs>
     </div>
   );
 };
