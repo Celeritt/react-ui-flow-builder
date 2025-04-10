@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Sidebar from '../components/Sidebar';
 import ContentArea from '../components/ContentArea';
 import HomePage from '../components/HomePage';
@@ -30,6 +30,7 @@ const Index = () => {
           {activeSection === 'datahub' && (
             <DatahubContent 
               activePage={activePage} 
+              activeSection={activeSection}
             />
           )}
           
