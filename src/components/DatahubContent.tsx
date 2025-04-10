@@ -206,24 +206,7 @@ const DatahubContent: React.FC<DatahubContentProps> = ({ activePage }) => {
                   </div>
                 </div>
                 
-                <div className="space-y-2">
-                  <div className="flex items-center p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md">
-                    <FileText className="h-5 w-5 text-blue-500 mr-2" />
-                    <span>sales_2024-04-01.parquet</span>
-                    <span className="ml-auto text-xs text-gray-500">248.5 MB</span>
-                  </div>
-                  <div className="flex items-center p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md">
-                    <FileText className="h-5 w-5 text-blue-500 mr-2" />
-                    <span>sales_2024-04-02.parquet</span>
-                    <span className="ml-auto text-xs text-gray-500">256.2 MB</span>
-                  </div>
-                  <div className="flex items-center p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md">
-                    <FileText className="h-5 w-5 text-blue-500 mr-2" />
-                    <span>sales_2024-04-03.parquet</span>
-                    <span className="ml-auto text-xs text-gray-500">251.8 MB</span>
-                  </div>
-                </div>
-              </div>
+
 
               <h3 className="text-lg font-semibold mt-8 mb-4">Data Organogram</h3>
               <DataOrganogram jsonPath="/data-organogram.json" />
