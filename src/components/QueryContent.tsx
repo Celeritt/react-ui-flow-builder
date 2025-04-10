@@ -1,7 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { CustomTabs, CustomTabsList, CustomTabsTrigger, CustomTabsContent } from "@/components/ui/custom-tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Code, FileText, History, Database, Search, PlusCircle } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogClose } from "@/components/ui/dialog";
 import { useState } from "react";
@@ -139,13 +139,13 @@ const QueryContent: React.FC<QueryContentProps> = ({ activePage }) => {
             <DialogClose />
           </DialogHeader>
           
-          <CustomTabs defaultValue={activeHistoryTab} onValueChange={setActiveHistoryTab} className="w-full">
-            <CustomTabsList className="mb-4">
-              <CustomTabsTrigger value="datalake">Data Lake Queries</CustomTabsTrigger>
-              <CustomTabsTrigger value="adhoc">Adhoc Queries</CustomTabsTrigger>
-            </CustomTabsList>
+          <Tabs defaultValue={activeHistoryTab} onValueChange={setActiveHistoryTab} className="w-full">
+            <TabsList className="mb-4">
+              <TabsTrigger value="datalake">Data Lake Queries</TabsTrigger>
+              <TabsTrigger value="adhoc">Adhoc Queries</TabsTrigger>
+            </TabsList>
             
-            <CustomTabsContent value="datalake">
+            <TabsContent value="datalake">
               <div className="space-y-4">
                 {[...Array(5)].map((_, i) => (
                   <Card key={i} className="p-4 hover:shadow-md transition-shadow">
@@ -164,9 +164,9 @@ const QueryContent: React.FC<QueryContentProps> = ({ activePage }) => {
                   </Card>
                 ))}
               </div>
-            </CustomTabsContent>
+            </TabsContent>
             
-            <CustomTabsContent value="adhoc">
+            <TabsContent value="adhoc">
               <div className="space-y-4">
                 {[...Array(3)].map((_, i) => (
                   <Card key={i} className="p-4 hover:shadow-md transition-shadow">
@@ -185,8 +185,8 @@ const QueryContent: React.FC<QueryContentProps> = ({ activePage }) => {
                   </Card>
                 ))}
               </div>
-            </CustomTabsContent>
-          </CustomTabs>
+            </TabsContent>
+          </Tabs>
         </DialogContent>
       </Dialog>
     </div>

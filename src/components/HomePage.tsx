@@ -1,6 +1,7 @@
+
 import { useState, useEffect, useRef } from 'react';
 import { Card } from "@/components/ui/card";
-import { CustomTabs, CustomTabsList, CustomTabsTrigger, CustomTabsContent } from "@/components/ui/custom-tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { FileText, Layout, LineChart, ArrowRight, PlusCircle, BarChart2, FolderTree } from 'lucide-react';
 
 const HomePage = () => {
@@ -20,6 +21,7 @@ const HomePage = () => {
     { id: 3, title: "Monthly Reports", type: "Workbook", viewed: "1 week ago", updated: "1 month ago" }
   ];
 
+  // Add scrolling effect for Quick Facts
   useEffect(() => {
     const scrollMessage = () => {
       if (messageRef.current) {
@@ -38,6 +40,7 @@ const HomePage = () => {
   
   return (
     <div className="container mx-auto p-6">
+      {/* Welcome Section */}
       <div className="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 rounded-xl p-8 mb-8 shadow-sm">
         <h1 className="text-3xl font-bold text-gray-800 dark:text-white mb-4">Welcome to Hutch Lakehouse</h1>
         <p className="text-gray-600 dark:text-gray-300 max-w-3xl mb-4">
@@ -51,6 +54,7 @@ const HomePage = () => {
         </p>
       </div>
       
+      {/* Quick Facts Section */}
       <div className="mb-8">
         <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-2">Quick Facts</h2>
         <div 
@@ -65,6 +69,7 @@ const HomePage = () => {
         </div>
       </div>
       
+      {/* Quick Links Section */}
       <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-6">Quick Links</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 mb-12">
         <Card className="p-6 hover:shadow-md transition-shadow border-green-100 dark:border-green-900/30 hover:border-green-200 dark:hover:border-green-800/50">
@@ -148,17 +153,18 @@ const HomePage = () => {
         </Card>
       </div>
       
+      {/* Recent/Favorite Works Section */}
       <div className="mb-8">
-        <CustomTabs defaultValue="recent" className="w-full">
+        <Tabs defaultValue="recent" className="w-full">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-2xl font-bold text-gray-800 dark:text-white">Pick up where you left</h2>
-            <CustomTabsList>
-              <CustomTabsTrigger value="recent">Recent Works</CustomTabsTrigger>
-              <CustomTabsTrigger value="favorites">Favorites</CustomTabsTrigger>
-            </CustomTabsList>
+            <TabsList>
+              <TabsTrigger value="recent">Recent Works</TabsTrigger>
+              <TabsTrigger value="favorites">Favorites</TabsTrigger>
+            </TabsList>
           </div>
           
-          <CustomTabsContent value="recent">
+          <TabsContent value="recent">
             <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
               <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                 <thead className="bg-gray-50 dark:bg-gray-700">
@@ -200,9 +206,9 @@ const HomePage = () => {
                 </tbody>
               </table>
             </div>
-          </CustomTabsContent>
+          </TabsContent>
           
-          <CustomTabsContent value="favorites">
+          <TabsContent value="favorites">
             <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
               <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                 <thead className="bg-gray-50 dark:bg-gray-700">
@@ -244,8 +250,8 @@ const HomePage = () => {
                 </tbody>
               </table>
             </div>
-          </CustomTabsContent>
-        </CustomTabs>
+          </TabsContent>
+        </Tabs>
       </div>
     </div>
   );

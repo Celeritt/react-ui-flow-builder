@@ -1,6 +1,7 @@
+
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { CustomTabs, CustomTabsList, CustomTabsTrigger, CustomTabsContent } from "@/components/ui/custom-tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { FileText, Calendar, Clock, Plus, ArrowRight, CheckCircle, XCircle } from "lucide-react";
 
 interface WorksContentProps {
@@ -208,13 +209,13 @@ const SchedulerContent = () => {
         Manage and monitor data jobs that run on a regular schedule.
       </p>
       
-      <CustomTabs defaultValue="active" className="w-full">
-        <CustomTabsList className="mb-6">
-          <CustomTabsTrigger value="active">Active Jobs</CustomTabsTrigger>
-          <CustomTabsTrigger value="history">Job History</CustomTabsTrigger>
-        </CustomTabsList>
+      <Tabs defaultValue="active" className="w-full">
+        <TabsList className="mb-6">
+          <TabsTrigger value="active">Active Jobs</TabsTrigger>
+          <TabsTrigger value="history">Job History</TabsTrigger>
+        </TabsList>
         
-        <CustomTabsContent value="active" className="space-y-4">
+        <TabsContent value="active" className="space-y-4">
           {[...Array(5)].map((_, i) => (
             <Card key={i} className="p-4">
               <div className="flex justify-between items-center">
@@ -242,9 +243,9 @@ const SchedulerContent = () => {
               </div>
             </Card>
           ))}
-        </CustomTabsContent>
+        </TabsContent>
         
-        <CustomTabsContent value="history" className="space-y-4">
+        <TabsContent value="history" className="space-y-4">
           {[...Array(7)].map((_, i) => (
             <Card key={i} className="p-4">
               <div className="flex justify-between items-center">
@@ -272,8 +273,8 @@ const SchedulerContent = () => {
               </div>
             </Card>
           ))}
-        </CustomTabsContent>
-      </CustomTabs>
+        </TabsContent>
+      </Tabs>
     </div>
   );
 };

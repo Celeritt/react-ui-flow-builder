@@ -10,7 +10,6 @@ import NotFound from "./pages/NotFound";
 import Header from "./components/Header";
 import SpacesContent from "./components/SpacesContent";
 
-// Create a client
 const queryClient = new QueryClient();
 
 const App = () => {

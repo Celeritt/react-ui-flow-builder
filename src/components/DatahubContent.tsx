@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card } from "@/components/ui/card";
@@ -162,7 +163,6 @@ const DatahubContent: React.FC<DatahubContentProps> = ({ activePage }) => {
         <Tabs defaultValue="lake-viewer" className="w-full">
           <TabsList>
             <TabsTrigger value="lake-viewer">Data Lake Viewer</TabsTrigger>
-            <TabsTrigger value="organogram">Organogram Viewer</TabsTrigger>
             <TabsTrigger value="hutchmap">HutchMap Atlas Viewer</TabsTrigger>
           </TabsList>
           
@@ -196,7 +196,7 @@ const DatahubContent: React.FC<DatahubContentProps> = ({ activePage }) => {
                 </Card>
               </div>
               
-              <div className="border rounded-md p-4 mb-6">
+              <div className="border rounded-md p-4">
                 <div className="flex items-center justify-between mb-2">
                   <h4 className="font-medium">Bronze Zone / raw_sales_data / 2024-04</h4>
                   <div>
@@ -224,21 +224,9 @@ const DatahubContent: React.FC<DatahubContentProps> = ({ activePage }) => {
                   </div>
                 </div>
               </div>
-            </Card>
-          </TabsContent>
 
-          <TabsContent value="organogram" className="space-y-4">
-            <Card className="p-6">
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-lg font-semibold">Hutchinson Data Organogram</h3>
-                <div>
-                  <Button size="sm" variant="outline">
-                    <Search size={16} className="mr-1" /> Search Data
-                  </Button>
-                </div>
-              </div>
-
-              <DataOrganogram jsonPath="/enterprise-data.json" />
+              <h3 className="text-lg font-semibold mt-8 mb-4">Data Organogram</h3>
+              <DataOrganogram jsonPath="/data-organogram.json" />
             </Card>
           </TabsContent>
           
@@ -253,7 +241,7 @@ const DatahubContent: React.FC<DatahubContentProps> = ({ activePage }) => {
                 </div>
               </div>
 
-              <WorldMapViewer jsonPath="/enterprise-data.json" />
+              <WorldMapViewer />
             </Card>
           </TabsContent>
         </Tabs>
