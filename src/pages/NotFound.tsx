@@ -1,59 +1,48 @@
 
-import { useLocation, Link } from "react-router-dom";
-import { useEffect } from "react";
-import { Database, FileX2, Home, Search } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Database, FileQuestion, Home, RefreshCw } from 'lucide-react';
 
 const NotFound = () => {
-  const location = useLocation();
-
-  useEffect(() => {
-    console.error(
-      "404 Error: User attempted to access non-existent route:",
-      location.pathname
-    );
-  }, [location.pathname]);
-
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900">
-      <div className="text-center p-8 max-w-md">
-        <div className="flex justify-center mb-6">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-gray-50 dark:bg-gray-900 p-4 text-center">
+      <div className="max-w-md">
+        <div className="mb-8 flex justify-center">
           <div className="relative">
-            <Database size={80} className="text-gray-300 dark:text-gray-600" />
-            <FileX2 size={40} className="text-red-500 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
+            <Database className="h-24 w-24 text-gray-300 dark:text-gray-600" />
+            <FileQuestion 
+              className="absolute bottom-0 right-0 h-12 w-12 text-blue-500 bg-white dark:bg-gray-800 rounded-full p-1" 
+            />
           </div>
         </div>
-        <h1 className="text-6xl font-bold mb-4 text-green-600 dark:text-green-400">404</h1>
-        <h2 className="text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-200">Data Not Found</h2>
-        <p className="text-lg text-gray-600 dark:text-gray-400 mb-6">
-          Your query returned 0 rows. The data you're looking for might have been moved, 
-          deleted, or is hiding in an unauthorized schema.
+        
+        <h1 className="mb-2 text-4xl font-extrabold tracking-tight text-gray-900 dark:text-gray-50">
+          404 - Data Not Found
+        </h1>
+        
+        <p className="mb-8 text-lg text-gray-600 dark:text-gray-300">
+          Oops! We couldn't find the data you were looking for. It seems our query returned zero rows.
         </p>
-        <p className="text-md text-gray-500 dark:text-gray-500 mb-8 italic">
-          "SELECT * FROM pages WHERE route = '{location.pathname}';<br />
-          -- 0 rows returned in 0.03s"
-        </p>
-        <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-3 justify-center">
+
+        <div className="flex flex-col sm:flex-row justify-center gap-4">
           <Button asChild>
-            <Link to="/" className="flex items-center justify-center">
-              <Home size={16} className="mr-2" />
-              Return to Dashboard
+            <Link to="/">
+              <Home className="mr-2 h-4 w-4" />
+              Return Home
             </Link>
           </Button>
-          <Button variant="outline" asChild>
-            <Link to="/" className="flex items-center justify-center">
-              <Search size={16} className="mr-2" />
-              Search Documentation
-            </Link>
+          
+          <Button variant="outline" onClick={() => window.location.reload()}>
+            <RefreshCw className="mr-2 h-4 w-4" />
+            Try Again
           </Button>
         </div>
-        
-        <div className="mt-12 p-4 bg-green-50 dark:bg-green-900/20 rounded-lg">
-          <p className="text-sm text-gray-600 dark:text-gray-400">
-            <strong>Data Joke:</strong> Why don't SQL developers like taking a vacation at the beach?
-          </p>
-          <p className="font-medium mt-2 text-green-600">
-            Because they're afraid of SQL injections from the wave DROP TABLE sand!
+
+        <div className="mt-8 text-sm text-gray-500 dark:text-gray-400 border-t border-gray-200 dark:border-gray-700 pt-6">
+          <p className="mb-2">Tech joke:</p>
+          <p className="italic">
+            "I went to find my data in the cloud but all I got was 404 precipitation not found."
           </p>
         </div>
       </div>

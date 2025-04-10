@@ -1,0 +1,103 @@
+
+[
+  {
+    "id": "hutchlake",
+    "name": "HutchLake",
+    "type": "database",
+    "children": [
+      {
+        "id": "sqlserver",
+        "name": "SQL Server",
+        "type": "database",
+        "children": [
+          { "id": "northwind", "name": "Northwind", "type": "database" },
+          { "id": "adventureworks", "name": "AdventureWorks", "type": "database" }
+        ]
+      },
+      {
+        "id": "postgres",
+        "name": "PostgreSQL",
+        "type": "database",
+        "children": [
+          { "id": "analytics", "name": "Analytics", "type": "database" },
+          { "id": "operational", "name": "Operational", "type": "database" }
+        ]
+      },
+      {
+        "id": "snowflake",
+        "name": "Snowflake",
+        "type": "database",
+        "children": [
+          { "id": "datawarehouse", "name": "Data Warehouse", "type": "database" },
+          { "id": "datamart", "name": "Data Mart", "type": "database" }
+        ]
+      },
+      {
+        "id": "s3",
+        "name": "S3",
+        "type": "bucket",
+        "children": [
+          {
+            "id": "finance",
+            "name": "Finance",
+            "type": "bucket",
+            "children": [
+              {
+                "id": "africa",
+                "name": "Africa",
+                "type": "region",
+                "children": [
+                  {
+                    "id": "procurement",
+                    "name": "Procurement",
+                    "type": "folder",
+                    "children": [
+                      { "id": "file1", "name": "finance_africa_data_part1.parquet", "type": "file" },
+                      { "id": "file2", "name": "finance_africa_data_part2.parquet", "type": "file" },
+                      { "id": "file3", "name": "finance_africa_data_part3.parquet", "type": "file" },
+                      { "id": "file4", "name": "finance_africa_data_part4.parquet", "type": "file" },
+                      { "id": "file5", "name": "finance_africa_data_part5.parquet", "type": "file" },
+                      { "id": "file6", "name": "finance_africa_data_part6.parquet", "type": "file" },
+                      { "id": "file7", "name": "finance_africa_data_part7.parquet", "type": "file" },
+                      { "id": "file8", "name": "finance_africa_data_part8.parquet", "type": "file" },
+                      { "id": "file9", "name": "finance_africa_data_part9.parquet", "type": "file" },
+                      { "id": "file10", "name": "finance_africa_data_part10.parquet", "type": "file" }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "sa",
+                "name": "SA",
+                "type": "region",
+                "children": [
+                  { "id": "reports", "name": "Reports", "type": "folder" }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "sales",
+            "name": "Sales",
+            "type": "bucket"
+          },
+          {
+            "id": "hr",
+            "name": "HR",
+            "type": "bucket"
+          }
+        ]
+      },
+      {
+        "id": "adls",
+        "name": "ADLS",
+        "type": "bucket"
+      },
+      {
+        "id": "gcs",
+        "name": "GCS",
+        "type": "bucket"
+      }
+    ]
+  }
+]
