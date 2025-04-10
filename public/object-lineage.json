@@ -1,0 +1,108 @@
+
+{
+  "id": "hutchlake",
+  "name": "HutchLake",
+  "type": "database",
+  "children": [
+    {
+      "id": "s3",
+      "name": "S3",
+      "type": "folder",
+      "children": [
+        {
+          "id": "rs1",
+          "name": "RS-1",
+          "type": "file",
+          "children": [
+            {
+              "id": "company_id",
+              "name": "COMPANY_ID",
+              "type": "file"
+            },
+            {
+              "id": "created_at_min",
+              "name": "CREATED_AT_MIN",
+              "type": "file"
+            }
+          ]
+        },
+        {
+          "id": "rs2",
+          "name": "RS-2",
+          "type": "file",
+          "children": [
+            {
+              "id": "first_out_amt",
+              "name": "FIRST_OUT_AMT",
+              "type": "file"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mysql",
+      "name": "MySQL",
+      "type": "server",
+      "children": [
+        {
+          "id": "table_core",
+          "name": "Table: core",
+          "type": "file",
+          "children": [
+            {
+              "id": "company_info",
+              "name": "COMPANY_ID, CREATED_AT_MIN, CREATED_AT_MAX",
+              "type": "file"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sql_server",
+      "name": "SQL Server",
+      "type": "server",
+      "children": [
+        {
+          "id": "rs2",
+          "name": "RS-2",
+          "type": "file",
+          "children": [
+            {
+              "id": "company_created",
+              "name": "COMPANY_ID, CREATED_AT_MIN, CREATED_AT_MAX",
+              "type": "file",
+              "children": [
+                { 
+                  "id": "result_tran_in_base_r1", 
+                  "name": "RESULT_OF_TRAN_IN_BASE1_R-1", 
+                  "type": "file" 
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "rs3",
+          "name": "RS-3",
+          "type": "file",
+          "children": [
+            {
+              "id": "company_first",
+              "name": "COMPANY_ID, FIRST_IN_AMT, FIRST_OUT_AMT",
+              "type": "file",
+              "children": [
+                { 
+                  "id": "result_tran_in_base_r2", 
+                  "name": "RESULT_OF_TRAN_IN_BASE2_R-1", 
+                  "type": "file" 
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

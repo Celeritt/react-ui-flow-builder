@@ -1,20 +1,20 @@
-
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card } from "@/components/ui/card";
-import { Upload, ArrowUpDown, FileUp, Database, Server, Search, Folder, FileText, ChevronRight, ChevronDown } from "lucide-react";
+import { Upload, ArrowUpDown, FileUp, Database, Server, Search, Folder, FileText } from "lucide-react";
 import { useState, useEffect } from "react";
 import TreeView from "./TreeView";
 import { cn } from "@/lib/utils";
 import DataOrganogram from "./DataOrganogram";
 import WorldMapViewer from "./WorldMapViewer";
+import ObjectLineage from "./ObjectLineage";
+import LakeToggle from "./LakeToggle";
 
 interface DatahubContentProps {
   activePage: string | null;
 }
 
 const DatahubContent: React.FC<DatahubContentProps> = ({ activePage }) => {
-  const [activeTab, setActiveTab] = useState("lake");
   const [treeViewVisible, setTreeViewVisible] = useState(true);
   
   const handleAwsLogin = () => {
@@ -145,7 +145,7 @@ const DatahubContent: React.FC<DatahubContentProps> = ({ activePage }) => {
             <Button>
               Browse Lake
             </Button>
-            <Button variant="outline" onClick={() => setActiveTab("upload")}>
+            <Button variant="outline" onClick={() => window.location.href = "?page=datahub-upload"}>
               <Upload className="mr-2" size={16} />
               Upload to Lake
             </Button>
@@ -160,9 +160,66 @@ const DatahubContent: React.FC<DatahubContentProps> = ({ activePage }) => {
       <div className="container mx-auto">
         <h2 className="text-2xl font-bold mb-4">Enterprise Data Viewer</h2>
         
+        {/* HutchLake header section with JSON upload */}
+        <Card className="p-6 mb-6">
+          <div className="flex flex-col md:flex-row items-center justify-between">
+            <div className="flex items-center mb-4 md:mb-0">
+              <Database className="h-16 w-16 text-blue-500 mr-4" />
+              <div>
+                <h3 className="text-2xl font-bold">HutchLake</h3>
+                <p className="text-gray-600 dark:text-gray-300">
+                  Enterprise Data Lake
+                </p>
+              </div>
+            </div>
+            
+            <div className="border border-dashed rounded-md p-4 bg-gray-50 dark:bg-gray-800">
+              <div className="text-sm mb-2">Upload custom JSON structure:</div>
+              <input 
+                type="file" 
+                accept=".json" 
+                className="text-sm"
+              />
+            </div>
+          </div>
+        </Card>
+        
+        {/* Data zones cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+          <Card className="p-4 hover:shadow-md transition-shadow">
+            <div className="flex items-center mb-2">
+              <Folder className="h-8 w-8 text-amber-500 mr-2" />
+              <h4 className="font-medium">Bronze Zone</h4>
+            </div>
+            <p className="text-sm text-gray-500">Raw data landing area</p>
+          </Card>
+          
+          <Card className="p-4 hover:shadow-md transition-shadow">
+            <div className="flex items-center mb-2">
+              <Folder className="h-8 w-8 text-gray-400 mr-2" />
+              <h4 className="font-medium">Silver Zone</h4>
+            </div>
+            <p className="text-sm text-gray-500">Cleaned and transformed data</p>
+          </Card>
+          
+          <Card className="p-4 hover:shadow-md transition-shadow">
+            <div className="flex items-center mb-2">
+              <Folder className="h-8 w-8 text-yellow-400 mr-2" />
+              <h4 className="font-medium">Gold Zone</h4>
+            </div>
+            <p className="text-sm text-gray-500">Analytics-ready data</p>
+          </Card>
+        </div>
+        
+        {/* Lake toggle with file explorer */}
+        <div className="mb-8">
+          <LakeToggle />
+        </div>
+        
         <Tabs defaultValue="lake-viewer" className="w-full">
           <TabsList>
             <TabsTrigger value="lake-viewer">Data Lake Viewer</TabsTrigger>
+            <TabsTrigger value="object-lineage">Object Lineage</TabsTrigger>
             <TabsTrigger value="hutchmap">HutchMap Atlas Viewer</TabsTrigger>
           </TabsList>
           
@@ -175,41 +232,15 @@ const DatahubContent: React.FC<DatahubContentProps> = ({ activePage }) => {
                   <Button size="sm">Export</Button>
                 </div>
               </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                <Card className="p-4 hover:shadow-md transition-shadow cursor-pointer">
-                  <Folder className="h-8 w-8 text-amber-500 mb-2" />
-                  <h4 className="font-medium">Bronze Zone</h4>
-                  <p className="text-sm text-gray-500">Raw data landing</p>
-                </Card>
-                
-                <Card className="p-4 hover:shadow-md transition-shadow cursor-pointer">
-                  <Folder className="h-8 w-8 text-gray-400 mb-2" />
-                  <h4 className="font-medium">Silver Zone</h4>
-                  <p className="text-sm text-gray-500">Refined data</p>
-                </Card>
-                
-                <Card className="p-4 hover:shadow-md transition-shadow cursor-pointer">
-                  <Folder className="h-8 w-8 text-yellow-400 mb-2" />
-                  <h4 className="font-medium">Gold Zone</h4>
-                  <p className="text-sm text-gray-500">Analytics-ready data</p>
-                </Card>
-              </div>
-              
-              <div className="border rounded-md p-4">
-                <div className="flex items-center justify-between mb-2">
-                  <h4 className="font-medium">Bronze Zone / raw_sales_data / 2024-04</h4>
-                  <div>
-                    <Button variant="ghost" size="sm">
-                      <Search size={16} className="mr-1" /> Search
-                    </Button>
-                  </div>
-                </div>
-                
-
 
               <h3 className="text-lg font-semibold mt-8 mb-4">Data Organogram</h3>
-              <DataOrganogram jsonPath="/data-organogram.json" />
+              <DataOrganogram jsonPath="/root-structure.json" />
+            </Card>
+          </TabsContent>
+          
+          <TabsContent value="object-lineage" className="space-y-4">
+            <Card className="p-6">
+              <ObjectLineage />
             </Card>
           </TabsContent>
           
