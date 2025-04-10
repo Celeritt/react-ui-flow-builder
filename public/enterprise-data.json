@@ -1,0 +1,181 @@
+
+{
+  "enterpriseDataViewer": {
+    "name": "HutchLake",
+    "children": [
+      {
+        "name": "SQL Server",
+        "children": [
+          {
+            "name": "Northwind",
+            "children": [
+              {
+                "name": "Tables",
+                "children": [
+                  { "name": "Customers", "type": "table" },
+                  { "name": "Orders", "type": "table" },
+                  { "name": "Products", "type": "table" }
+                ]
+              },
+              {
+                "name": "Views",
+                "children": [
+                  { "name": "CustomerOrders", "type": "file" },
+                  { "name": "ProductInventory", "type": "file" }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "AdventureWorks",
+            "children": [
+              {
+                "name": "Tables",
+                "children": [
+                  { "name": "Person", "type": "table" },
+                  { "name": "Address", "type": "table" },
+                  { "name": "Employee", "type": "table" }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "PostgreSQL",
+        "children": [
+          {
+            "name": "Analytics",
+            "children": [
+              {
+                "name": "Schemas",
+                "children": [
+                  { "name": "public", "type": "schema" },
+                  { "name": "marketing", "type": "schema" }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Operational",
+            "children": [
+              {
+                "name": "Tables",
+                "children": [
+                  { "name": "users", "type": "table" },
+                  { "name": "logs", "type": "table" }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Snowflake",
+        "children": [
+          { "name": "Data Warehouse", "type": "database" },
+          { "name": "Data Mart", "type": "database" }
+        ]
+      },
+      {
+        "name": "S3",
+        "children": [
+          {
+            "name": "Finance",
+            "children": [
+              {
+                "name": "Africa",
+                "children": [
+                  {
+                    "name": "Procurement",
+                    "children": [
+                      { "name": "finance_africa_data_part1.parquet", "type": "file" },
+                      { "name": "finance_africa_data_part2.parquet", "type": "file" },
+                      { "name": "finance_africa_data_part3.parquet", "type": "file" },
+                      { "name": "finance_africa_data_part4.parquet", "type": "file" },
+                      { "name": "finance_africa_data_part5.parquet", "type": "file" },
+                      { "name": "finance_africa_data_part6.parquet", "type": "file" },
+                      { "name": "finance_africa_data_part7.parquet", "type": "file" },
+                      { "name": "finance_africa_data_part8.parquet", "type": "file" },
+                      { "name": "finance_africa_data_part9.parquet", "type": "file" },
+                      { "name": "finance_africa_data_part10.parquet", "type": "file" }
+                    ]
+                  }
+                ]
+              },
+              {
+                "name": "SA",
+                "children": [
+                  { "name": "Reports", "type": "folder" }
+                ]
+              }
+            ]
+          },
+          { "name": "Sales", "type": "bucket" },
+          { "name": "HR", "type": "bucket" }
+        ]
+      },
+      { "name": "ADLS", "type": "bucket" },
+      { "name": "GCS", "type": "bucket" }
+    ]
+  },
+  "mapView": {
+    "worldMap": [
+      {
+        "city": "Johannesburg",
+        "regions": [
+          {
+            "name": "Sandton",
+            "data": [
+              {
+                "database": "Customer_DB",
+                "tables": ["customers", "orders", "products"]
+              },
+              {
+                "database": "Analytics_DB",
+                "tables": ["sales_metrics", "marketing_campaign"]
+              }
+            ]
+          },
+          {
+            "name": "Rosebank",
+            "data": [
+              {
+                "database": "Products_DB",
+                "tables": ["inventory", "suppliers", "categories"]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "city": "New York",
+        "regions": [
+          {
+            "name": "Manhattan",
+            "data": [
+              {
+                "database": "Finance_DB",
+                "tables": ["revenue", "expenses", "forecasts"]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "city": "Berlin",
+        "regions": [
+          {
+            "name": "Mitte",
+            "data": [
+              {
+                "database": "European_Sales_DB",
+                "tables": ["eu_customers", "eu_compliance", "gdpr_logs"]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
