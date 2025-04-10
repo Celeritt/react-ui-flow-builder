@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Database, Folder, FileText, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -13,7 +12,7 @@ import {
 interface OrganogramNode {
   id: string;
   name: string;
-  type: 'database' | 'bucket' | 'folder' | 'file' | 'schema' | 'region';
+  type: 'database' | 'bucket' | 'folder' | 'file' | 'schema' | 'region' | 'server';
   children?: OrganogramNode[];
 }
 
@@ -33,15 +32,17 @@ const DataOrganogram: React.FC<DataOrganogramProps> = ({ initialData, jsonPath }
       fetch(jsonPath)
         .then(response => response.json())
         .then(data => {
-          setData(data);
-          setCurrentView(data);
+          // Ensure data has the correct type properties
+          const typedData = ensureCorrectTypes(data);
+          setData(Array.isArray(typedData) ? typedData : [typedData]);
+          setCurrentView(Array.isArray(typedData) ? typedData : [typedData]);
         })
         .catch(error => console.error("Error loading organogram data:", error));
     } else if (initialData) {
       setCurrentView(initialData);
     } else {
       // Default data structure if no data is provided
-      const defaultData = [
+      const defaultData: OrganogramNode[] = [
         {
           id: "hutchlake",
           name: "HutchLake",
@@ -140,6 +141,34 @@ const DataOrganogram: React.FC<DataOrganogramProps> = ({ initialData, jsonPath }
     }
   }, [jsonPath, initialData]);
 
+  // Helper function to ensure all nodes have correct type values
+  const ensureCorrectTypes = (node: any): OrganogramNode | OrganogramNode[] => {
+    if (Array.isArray(node)) {
+      return node.map(item => ensureCorrectTypes(item)) as OrganogramNode[];
+    }
+    
+    // Assign a valid type if the current one isn't valid
+    const validType = (node.type === 'database' || 
+                       node.type === 'bucket' || 
+                       node.type === 'folder' || 
+                       node.type === 'file' || 
+                       node.type === 'schema' || 
+                       node.type === 'region' || 
+                       node.type === 'server') ? node.type : 'folder';
+    
+    const processedNode: OrganogramNode = {
+      id: node.id || `node-${Math.random().toString(36).substr(2, 9)}`,
+      name: node.name,
+      type: validType
+    };
+    
+    if (node.children && node.children.length > 0) {
+      processedNode.children = node.children.map((child: any) => ensureCorrectTypes(child)) as OrganogramNode[];
+    }
+    
+    return processedNode;
+  };
+
   const handleNodeClick = (node: OrganogramNode) => {
     if (node.children && node.children.length > 0) {
       setCurrentPath([...currentPath, node]);
@@ -202,6 +231,10 @@ const DataOrganogram: React.FC<DataOrganogramProps> = ({ initialData, jsonPath }
         return <FileText className="h-10 w-10 text-yellow-500" />;
       case 'region':
         return <Folder className="h-10 w-10 text-green-500" />;
+      case 'server':
+        return <Database className="h-10 w-10 text-purple-500" />;
+      case 'schema':
+        return <FileText className="h-10 w-10 text-indigo-500" />;
       default:
         return <Folder className="h-10 w-10" />;
     }

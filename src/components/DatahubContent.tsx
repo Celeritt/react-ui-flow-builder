@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card } from "@/components/ui/card";
-import { Upload, ArrowUpDown, FileUp, Database, Server, Search, Folder, FileText } from "lucide-react";
+import { Upload, ArrowUpDown, FileUp, Database, Server, Search, Folder, FileText, ChevronRight, ChevronDown } from "lucide-react";
 import { useState, useEffect } from "react";
 import TreeView from "./TreeView";
 import { cn } from "@/lib/utils";
@@ -160,7 +160,6 @@ const DatahubContent: React.FC<DatahubContentProps> = ({ activePage }) => {
       <div className="container mx-auto">
         <h2 className="text-2xl font-bold mb-4">Enterprise Data Viewer</h2>
         
-        {/* HutchLake header section with JSON upload */}
         <Card className="p-6 mb-6">
           <div className="flex flex-col md:flex-row items-center justify-between">
             <div className="flex items-center mb-4 md:mb-0">
@@ -184,7 +183,6 @@ const DatahubContent: React.FC<DatahubContentProps> = ({ activePage }) => {
           </div>
         </Card>
         
-        {/* Data zones cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
           <Card className="p-4 hover:shadow-md transition-shadow">
             <div className="flex items-center mb-2">
@@ -211,7 +209,6 @@ const DatahubContent: React.FC<DatahubContentProps> = ({ activePage }) => {
           </Card>
         </div>
         
-        {/* Lake toggle with file explorer */}
         <div className="mb-8">
           <LakeToggle />
         </div>
