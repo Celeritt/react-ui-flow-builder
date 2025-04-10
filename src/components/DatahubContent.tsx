@@ -638,7 +638,8 @@ const DatahubContent: React.FC<DatahubContentProps> = ({ activePage }) => {
   };
 
   // Determine if we should show the tree view (only for datahub section)
-  const shouldShowTreeView = activeSection === 'datahub';
+  // Update this line to not reference the undefined activeSection variable
+  const shouldShowTreeView = true; // Always show the tree view in the DatahubContent
 
   return (
     <div className="flex flex-1">
