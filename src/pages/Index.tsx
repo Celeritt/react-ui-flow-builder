@@ -29,8 +29,9 @@ const Index = () => {
           
           {activeSection === 'datahub' && (
             <DatahubContent 
-              activePage={activePage} 
-              activeSection={activeSection}
+              activePage={activePage}
+              // Pass activePage only since that's what DatahubContent expects
+              // The component doesn't actually use activeSection based on the error
             />
           )}
           

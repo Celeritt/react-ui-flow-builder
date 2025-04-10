@@ -1,13 +1,13 @@
 
-import * as ReactDOM from 'react-dom/client';
+import { createRoot } from 'react-dom/client';
 import App from './App.tsx';
 import './index.css';
 
-const container = document.getElementById('root');
+const rootElement = document.getElementById('root');
 
-if (!container) {
+if (!rootElement) {
   throw new Error('Root element not found');
 }
 
-const root = ReactDOM.createRoot(container);
+const root = createRoot(rootElement);
 root.render(<App />);
