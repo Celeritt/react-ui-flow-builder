@@ -41,7 +41,7 @@ const DataOrganogram: React.FC<DataOrganogramProps> = ({ initialData, jsonPath }
       setCurrentView(initialData);
     } else {
       // Default data structure if no data is provided
-      const defaultData = [
+      const defaultData: OrganogramNode[] = [
         {
           id: "hutchlake",
           name: "HutchLake",
