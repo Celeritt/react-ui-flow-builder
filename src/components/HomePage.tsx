@@ -42,7 +42,7 @@ const HomePage = () => {
     <div className="container mx-auto p-6">
       {/* Welcome Section */}
       <div className="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 rounded-xl p-8 mb-8 shadow-sm">
-        <h1 className="text-3xl font-bold text-gray-800 dark:text-white mb-4">Welcome to Hutch Lakehouse</h1>
+        <h1 className="text-3xl font-bold text-gray-800 dark:text-white mb-4">Welcome to the Data Platform</h1>
         <p className="text-gray-600 dark:text-gray-300 max-w-3xl mb-4">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eu metus at nisi tempus dignissim. 
           Proin facilisis nisi vitae velit consequat, a sodales dui dapibus. Nullam vitae sapien id magna 
